@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-13 19:47:13
+ * @LastEditTime: 2023-02-14 18:15:56
  * @FilePath: /orz-uniapp/pages/index/news.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -29,7 +29,7 @@
 					v-model="value"
 					:localdata="comeInList"
 					@change="changeHandle"
-					/>
+					></uni-data-select>
 				</view>
 					<view>
 					<view>100</view>
@@ -46,7 +46,7 @@
 					v-model="value2"
 					:localdata="comeInList"
 					@change="changeHandle"
-					/>
+					></uni-data-select>
 				</view>
 				<view>
 					<view>794.28</view>
@@ -77,8 +77,8 @@
 
 <script>
 	import request from '@/common/request.js';
-	import uniDataSelect from '@/components/uni-data-select/uni-data-select.vue';
-	console.log(uniDataSelect,'uniDataSelect')
+	// import uniDataSelect from '@/components/uni-data-select/uni-data-select.vue';
+	// console.log(uniDataSelect,'uniDataSelect')
 	export default {
 		data() {
 			return {
@@ -97,7 +97,7 @@
 				]
 			};
 		},
-		components:{uniDataSelect},
+		// components:{uniDataSelect},
 		mounted() {
 			
 		},
