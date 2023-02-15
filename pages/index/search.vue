@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-13 16:06:36
+ * @LastEditTime: 2023-02-15 12:08:38
  * @FilePath: /orz-uniapp/pages/index/search.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,7 +15,7 @@
 	  <view class="account-list">
         <view class="account-list-item">
 			<u-icon name="photo" class="me-img" />
-			<view>
+			<view @click="rechargeHandle">
 				充值
 			</view>
 		</view>
@@ -122,26 +122,24 @@
 			</view>
 		</view>
 	  </view>
+	
 	  <view style="height: 120rpx;width: 1rpx;"></view>
+	  <capital :show="isCapital" @closeFn="closeFn"/>
+	
 	</view>
 </template>
 
 <script>
-	import request from '@/common/request.js';
+import capital from '../capital'
+console.log(capital,'capital')
 	export default {
 		data() {
 			return {
-				cardCur: 0,
-				bannerList: [{
-						imageUrl: 'https://cdn.zhoukaiwen.com/qh_banner8.jpg'
-					},
-					{
-						imageUrl: 'https://cdn.zhoukaiwen.com/qdpz_banner3.jpg'
-					}
-				],
-				modalName: null, //会员弹窗
+				isCapital:false,
+				show:true
 			}
 		},
+		components: { capital },
 		onShow() {
 
 		},
@@ -149,36 +147,16 @@
 
 		},
 		methods: {
-			showModal() {
-				this.modalName = 'Modal'
+			rechargeHandle(){
+				console.log('999')
+               this.isCapital = true;
 			},
-			hideModal() {
-				this.modalName = null;
+			open() {
+				// console.log('open');
 			},
-			cardSwiper(e) {
-				this.cardCur = e.detail.current
-			},
-			goPoster() {
-				uni.navigateTo({
-					url: '../main/posterList'
-				})
-			},
-			goPicEditor() {
-				uni.navigateTo({
-					url: '/tn_components/imageEditor'
-				})
-			},
-			goMatting() {
-				uni.navigateTo({
-					url: '../main/matting'
-				})
-			},
-			goBasic(){
-				uni.showToast({
-				    title: '会员组件，请在正式版体验',
-					icon: 'none',
-				    duration: 2000
-				});
+			closeFn() {
+				this.isCapital = false
+				// console.log('close');
 			}
 		}
 	}

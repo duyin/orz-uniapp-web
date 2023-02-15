@@ -3,7 +3,8 @@
 	<view class="components-theme">
 	 <view class="me-header">
 		<view class="me-header-info">
-			<u-icon name="account-fill" class="me-img"></u-icon>
+			<!-- <u-icon name="account-fill" class="me-img"></u-icon> -->
+			<u-avatar :src="src" size="64" style="margin-right:8px;"></u-avatar>
 			<view class="me-header-text">
                <view>Rhett Fang</view>
 			   <view>aaaa****@gmail.com</view>
@@ -66,6 +67,7 @@
 	export default {
 		data() {
 			return {
+				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				userList:[
 					{
 						name:'认证信息',

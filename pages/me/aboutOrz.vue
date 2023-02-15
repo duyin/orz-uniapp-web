@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-14 11:52:56
+ * @LastEditTime: 2023-02-14 18:40:13
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -20,7 +20,7 @@
             </view>
             <view class="custom-vision">版本号1.0.0</view>
             <view class="me-list-wrap">
-		<view class="me-list-item">
+		<view class="me-list-item" @click="visionHandle">
 			<u-icon name="photo" class="me-img"></u-icon><view class="me-title">版本更新</view>
 			<view>
 				<u-icon name="arrow-right"></u-icon>
@@ -75,7 +75,9 @@ export default {
 	
 	},
 	methods: {
-		
+		visionHandle(){
+			location.href="https://www.orzcash.com/#/clientkyc"
+		}
 	}
 };
 </script>
