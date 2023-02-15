@@ -28,6 +28,13 @@
 			}
 		},
 		{
+			"path": "pages/me/security",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/me/salary",
 			"style": {
 				"navigationBarTitleText": "薪资排行",

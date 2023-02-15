@@ -28,7 +28,7 @@
 				<u-icon name="arrow-right"></u-icon>
 			</view>
 		</view>
-		<view class="me-list-item">
+		<view class="me-list-item" @click="securityHandle">
 			<u-icon name="photo" class="me-img"></u-icon><view class="me-title">安全设置</view>
 			<view>
 				<u-icon name="arrow-right"></u-icon>
@@ -89,6 +89,11 @@
 				console.log('9999090')
 				uni.navigateTo({
 					url: '../me/aboutOrz'
+				})
+			},
+			securityHandle(){
+				uni.navigateTo({
+					url: '../me/security'
 				})
 			}
 		}

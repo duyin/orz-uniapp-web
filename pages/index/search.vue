@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-15 12:08:38
+ * @LastEditTime: 2023-02-15 16:39:23
  * @FilePath: /orz-uniapp/pages/index/search.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,7 +19,7 @@
 				充值
 			</view>
 		</view>
-		<view class="account-list-item">
+		<view class="account-list-item" @click="extractHandle">
 			<u-icon name="photo" class="me-img" />
 			<view>转账</view>
 		</view>
@@ -125,24 +125,21 @@
 	
 	  <view style="height: 120rpx;width: 1rpx;"></view>
 	  <capital :show="isCapital" @closeFn="closeFn"/>
-	
+	  <extract :visible="isExtract" @closeExtractFn="closeExtractFn"/>
 	</view>
 </template>
 
 <script>
-import capital from '../capital'
-console.log(capital,'capital')
+import capital from '../capital/capital'
+import extract from '../capital/extract'
 	export default {
 		data() {
 			return {
 				isCapital:false,
-				show:true
+				isExtract:false
 			}
 		},
-		components: { capital },
-		onShow() {
-
-		},
+		components: { capital,extract},
 		mounted() {
 
 		},
@@ -151,12 +148,19 @@ console.log(capital,'capital')
 				console.log('999')
                this.isCapital = true;
 			},
+			extractHandle(){
+				this.isExtract = true;
+			},
 			open() {
 				// console.log('open');
 			},
 			closeFn() {
 				this.isCapital = false
+			
 				// console.log('close');
+			},
+			closeExtractFn(){
+				this.isExtract = false
 			}
 		}
 	}
