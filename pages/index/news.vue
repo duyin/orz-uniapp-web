@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-14 18:15:56
+ * @LastEditTime: 2023-02-16 10:46:37
  * @FilePath: /orz-uniapp/pages/index/news.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,7 +16,8 @@
            <view class="conversion-tabs-title">买卖外币和数字资产</view>
 		   <view class="conversion-tabs-box">
 			<!-- <u-sticky> -->
-				<u-tabs :list="list1" :current="count" @change="clickHandle" class="conversion-tabs-list"></u-tabs>
+				<u-tabs :list="list1" 
+      :is-scroll="false" bar-width="50" active-color="orange"  :current="count" @change="clickHandle" class="conversion-tabs-list"></u-tabs>
 			<!-- </u-sticky> -->
 		   </view>
 		</view>
@@ -150,7 +151,7 @@
 		margin-top:24px;
 	}
 	&-tabs-box{
-		margin-top:16px;
+		margin:16px auto;
 	}
 	&-tabs-list{
 		background: none !important;

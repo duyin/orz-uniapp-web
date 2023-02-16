@@ -1,27 +1,27 @@
 {
-  "_from": "uview-ui@2.0",
-  "_id": "uview-ui@2.0.35",
+  "_from": "uview-ui@2.0.31",
+  "_id": "uview-ui@2.0.31",
   "_inBundle": false,
-  "_integrity": "sha512-OfMttN3XkHvQosXfd8bjz8ASTvypPoGzBWmQZBJ871bYMCA7t2bDFPlzjbxUj/5ykAjKnZ8zMUapSwSisVt99g==",
+  "_integrity": "sha512-I/0fGuvtiKHH/mBb864SGYk+SJ7WaF32tsBgYgeBOsxlUp+Th+Ac2tgz2cTvsQJl6eZYWsKZ3ixiSXCAcxZ8Sw==",
   "_location": "/uview-ui",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "uview-ui@2.0",
+    "raw": "uview-ui@2.0.31",
     "name": "uview-ui",
     "escapedName": "uview-ui",
-    "rawSpec": "2.0",
+    "rawSpec": "2.0.31",
     "saveSpec": null,
-    "fetchSpec": "2.0"
+    "fetchSpec": "2.0.31"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmmirror.com/uview-ui/-/uview-ui-2.0.35.tgz",
-  "_shasum": "b0e7916382e533402cfb2e86c10f2cacca22a9b4",
-  "_spec": "uview-ui@2.0",
+  "_resolved": "https://registry.npmmirror.com/uview-ui/-/uview-ui-2.0.31.tgz",
+  "_shasum": "85679c0ef7ecfde0672d4ef74af813506ea1bcca",
+  "_spec": "uview-ui@2.0.31",
   "_where": "/Users/duyin/Documents/orz-uniapp-web",
   "bugs": {
     "url": "https://github.com/umicro/uView2.0/issues"
@@ -116,5 +116,5 @@
       }
     }
   },
-  "version": "2.0.35"
+  "version": "2.0.31"
 }
