@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-15 16:39:23
+ * @LastEditTime: 2023-02-16 10:15:59
  * @FilePath: /orz-uniapp/pages/index/search.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -31,7 +31,7 @@
 			<u-icon name="photo" class="me-img" />
 			<view>跨境速汇</view>
 		</view>
-		<view class="account-list-item">
+		<view class="account-list-item" @click="accountHandle">
 			<u-icon name="photo" class="me-img" />
 			<view>账单</view>
 		</view>
@@ -161,6 +161,11 @@ import extract from '../capital/extract'
 			},
 			closeExtractFn(){
 				this.isExtract = false
+			},
+			accountHandle(){
+				uni.navigateTo({
+					url: '../capital/accountbill'
+				})
 			}
 		}
 	}
