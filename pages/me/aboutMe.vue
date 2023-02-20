@@ -1,156 +1,156 @@
-<!-- 关于作者 -->
+<!--
+ * @Author: 杜印 m18612326243@163.com
+ * @Date: 2023-02-14 11:24:10
+ * @LastEditors: 杜印 m18612326243@163.com
+ * @LastEditTime: 2023-02-17 11:19:25
+ * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!-- 课程班级 -->
 <template>
-  <view class="about">
-
-    <canvas canvas-id="bubble" :style="'width:' + width + 'px;height:' + height + 'px'" class="like-fx"></canvas>
-    <like-fx ref="likeFx" :width="width" :height="height"></like-fx>
-	
-	<view class="titleZ text-center align-center">
-		<text class="text-bold">关于作者</text>
-		<view class="contentZ">
-			<text class="text-xl">项目作者:周凯文，一名6年经验乌黑秀发的九零后web前端程序员，坐标西安，自研项目：「宅家学IT」、「易凯科技」</text>
+	<view>
+		<cu-custom class="custom-header" :isBack="true">
+			<block slot="backText">返回</block>
+			<block slot="content">基本信息</block>
+		</cu-custom>
+		<view class="custom-wrap">
+          <view class="custom-userImg">
+                <u-icon name="account-fill" class="custom-me-img"></u-icon>
+               
+            </view>
+            <view class="custom-vision">rhett****@gmail.com</view>
+            <view class="custom-vision">已验证</view>
+            <view class="me-list-wrap">
+                <view class="me-list-item" @click="visionHandle">
+                    <view class="me-title">账户号码</view>
+                    <view>
+                      002-011-5224818
+                    </view>
+                </view>
+                <view class="me-list-item">
+                   <view class="me-title">显示姓名</view>
+                    <view>
+                      Rhett Fang
+                    </view>
+                </view>
+                <view class="me-list-item">
+                   <view class="me-title">电话号码</view>
+                    <view>
+                      (86)176******00
+                    </view>
+                </view>
+                <view class="me-list-item">
+                   <view class="me-title">地址</view>
+                    <view>
+                      xxxxxxXXxxxxxxxxxxxxxxxx
+                    </view>
+                </view>
+                <view class="me-list-item">
+                   <view class="me-title">注册时间</view>
+                    <view>
+                      2023-01-31 11:00:09
+                    </view>
+                </view>
+	        </view>
 		</view>
 	</view>
-	
-	<view class="titleZ text-center align-center margin-top-xl">
-		<text class="text-bold">想学习？有需求？有项目？</text>
-		<view class="contentZ margin-top-lg">
-			<text class="text-xl text-bold">「宅家学」</text>
-			<text class="text-xl">：软件技术开发培训（实战项目），1至4个月课程可随意选择，课程包含：UI设计、Web前端、Java后台等，挑战万元月薪，快来宅家学吧～</text>
-		</view>
-		<view class="contentZ" style="margin-top: 40rpx;">
-			<text class="text-xl text-bold">「易凯科技」</text>
-			<text class="text-xl">：承接电商/OA/分销/财务/进销存/ERP系统/H5页面/网站建设/小程序/公众号/App定制开发/名片设计...</text>
-		</view>
-	</view>
-	
-    <button class='' open-type="contact">
-      <image src='../../static/logo.png' class='share-img png round shadow-lg bg-white' mode='aspectFit'>
-      </image>
-    </button>
-  </view>
 </template>
 
 <script>
-  import LikeFx from '@/components/likeFx/likeFx.vue'
-  export default {
-    components: {
-      LikeFx
-    },
-    data() {
-      return {
-        animation_timer: null, // 动画定时器
-        width: 375,
-        height: 1920
-      }
-    },
-    onLoad() {
-      this._startLikeAnimation();
-    },
-    onShareAppMessage() {
-      return {
-        title: '快来和我们玩转软件开发吧～',
-        path: '/pages/about/about?from=share'
-      }
-    },
-    methods: {
-      _startLikeAnimation() {
-        this.animation_timer = setInterval(() => {
-          this.$refs.likeFx.likeClick()
-        }, 300)
-      }
-    }
-  }
+export default {
+	data() {
+		return {}
+	},
+	onLoad() {
+		
+	},
+	computed: {
+	
+	},
+	methods: {
+		visionHandle(){
+			location.href="https://www.orzcash.com/#/clientkyc"
+		}
+	}
+};
 </script>
 
-<style scoped>
-	.titleZ{
-		width: 750rpx;
-		font-size: 52rpx;
-		margin-top: 60rpx;
+<style lang="scss" scoped>
+/* #ifndef H5 */
+page {
+	height: 100%;
+	background-color: #f2f2f2;
+}
+
+/* #endif */
+.custom-header{
+    background: #fff;;
+}
+.custom{
+    &-wrap{
+        width: calc(100% - 24px);
+        margin: 24px auto;
+    }
+    &-userImg{
+        width: 100px;
+        height: 100px;
+        border:1px solid #ccc;
+       font-size: 30px;
+        border-radius: 50%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &-vision{
+        padding-top:24px;
+        text-align: center;
+        font-weight: bold;
+    }
+    &-outLogin{
+        height: 30px;
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color:#fff;
+        width: calc(100% - 24px);
+        margin:24px auto;
+        background-color: rgba(31, 31, 31, 1);
+    }
+}
+.me-img{
+		width: 30px;
+		height: 30px;
+		border: 1px solid #000;
+		border-radius: 50%;
+		display: flex;
+        justify-content: center;
+		margin-right:16px;
 	}
-	.contentZ{
-		width: 650rpx;
-		margin: 10rpx auto 0;
-		text-align: left;
+.me{
+		&-list-wrap{
+			margin-top:40rpx;
+			width: calc(100% - 24px);
+			margin:0 auto;
+		}
+		&-list-item{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			text-align: left;
+			height: 30px;
+			border-bottom: 1px solid #ccc;
+			padding-bottom: 16px;;
+			margin-top:24px;
+		}
+		&-title{
+			flex: 1;
+		}
 	}
-  .about-bg {
-    background-size: cover;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    flex-direction: column;
-    color: #fff;
-  }
-
-  .edit-fixed {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    z-index: 1024;
-    box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.1);
-  }
-
-  .detail-imgs image {
-    width: 100%;
-    float: left;
-    /* height:400rpx; 不定高了*/
-    border: 0;
-    padding: 0;
-    margin: 0
-  }
-
-  .share-img {
-    position: fixed;
-    padding: 10rpx;
-    width: 100rpx;
-    height: 100rpx;
-    /* top: 680rpx; */
-    bottom: 200rpx;
-    right: 20rpx;
-    z-index: 1024;
-    opacity: 0.8;
-    box-shadow: 0rpx 8rpx 30rpx 0rpx rgba(0, 0, 0, 0.3);
-    border: none;
-  }
-
-  .about {
-    margin: 0;
-    width: 100%;
-    height: 100vh;
-	padding-top: 20%;
-    color: #fff;
-    background: linear-gradient(-120deg, #F15BB5, #9A5CE5, #01BEFF, #00F5D4);
-    /* background: linear-gradient(-120deg, #0976ea, #c471f5, #f956b6, #ea7e0a); */
-    background-size: 500% 500%;
-    animation: gradientBG 15s ease infinite;
-  }
-
-  @keyframes gradientBG {
-    0% {
-      background-position: 0% 50%;
-    }
-
-    50% {
-      background-position: 100% 50%;
-    }
-
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  .container {
-    width: 100%;
-    position: absolute;
-    text-align: center;
-  }
-
-  .like-fx {
-    position: fixed;
-    right: 0;
-    z-index: 1024;
-    pointer-events: none;
-    /* background-color: red; */
-  }
 </style>
+
+<style lang="scss" scoped>
+	
+</style>
+

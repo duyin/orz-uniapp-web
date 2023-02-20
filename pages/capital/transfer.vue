@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-17 11:00:59
+ * @LastEditTime: 2023-02-17 11:12:06
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -11,24 +11,11 @@
     <view class="capital-wrap">
         <u-popup v-model="visible" :show="visible" :round="10" border-radius="30" mode="bottom" closeable @close="close" @open="open" >
             <view class="capital-box">
-                <view>提取</view>
-                <view>法币转账、提取现金、数字资产等。</view>
+                <view>转账</view>
+                <view>即时在ORZ同账户体系间转移资产。</view>
               
                 <view class="capital-network">
                     <view class="capital-title">香港账户</view>
-                    <!-- <u-collapse
-                        @change="changeCollapse"
-                        @close="closeCollapse"
-                        @open="openCollapse"
-                        accordion
-                    >
-                        <u-collapse-item
-                        title="文档指南"
-                        name="Docs guide"
-                        >
-                        <text class="u-collapse-content">涵盖uniapp各个方面，给开发者方向指导和设计理念，让您茅塞顿开，一马平川</text>
-                        </u-collapse-item>
-                    </u-collapse> -->
                     <view class="capital-collapse-main">
                     <uni-collapse :accordion="true">  
                         <uni-collapse-item>  
@@ -49,7 +36,39 @@
                                             :data-index="index"
                                             >
                                            <p>{{item.backName}}</p>
-                                           <p>{{item.title}}</p>
+                                           <!-- <p>{{item.title}}</p> -->
+                                        </view>
+                                    </view>
+                               </view>
+                               <view class="capital-collapse-contentBtn">继续</view>
+                            </view>  
+                        </uni-collapse-item>  
+                    </uni-collapse>
+                </view>
+                </view>
+                <view class="capital-network">
+                    <view class="capital-title">离岸账户</view>
+                    <view class="capital-collapse-main">
+                    <uni-collapse :accordion="true">  
+                        <uni-collapse-item>  
+                            <template #title>
+                                <div class="capital-collapse-title">
+                                    <p>数字资产账户</p>
+                                    <p>002-011-5224818-001</p> 
+                                </div>
+                            </template>
+                            <view class="capital-collapse-content">
+                               <view class="capital-collapse-list">
+                                    <view class="capital-collapse-ul">
+                                        <view v-for="(item, index) in tagList"
+                                           @click="(e)=>listHandle(e,index)" 
+                                           :class="{active:index===activeIndex}" 
+                                           class="capital-collapse-item"
+                                            :key="index"
+                                            :data-index="index"
+                                            >
+                                           <p>{{item.backName}}</p>
+                                           <!-- <p>{{item.title}}</p> -->
                                         </view>
                                     </view>
                                </view>
@@ -108,17 +127,17 @@ export default {
             ],
             tagList:[
                 {
-                    backName:'银行转账',
-                    title:'可取款货币：HKD、USD、CNH、SGD等'
+                    backName:'HKD',
+                    // title:'可取款货币：HKD、USD、CNH、SGD等'
                 },
                 {
-                    backName:'现场取款',
-                    title:'可取款货币：HKD、USD、CNH、SGD等'
+                    backName:'USD',
+                    // title:'可取款货币：HKD、USD、CNH、SGD等'
                 },
-                {
-                    backName:'中国银联',
-                    title:'可取款货币：CNH'
-                }
+                // {
+                //     backName:'中国银联',
+                //     title:'可取款货币：CNH'
+                // }
             ]
         }
 	},
@@ -191,10 +210,14 @@ export default {
     &-warn-wrap{
         margin-top:12px;
     }
+    &-collapse-ul{
+        display: flex;
+    }
     &-collapse-item{
         border: 1px solid #ccc;
-        padding: 16px;;
-        margin-bottom: 16px;
+        padding: 8px 16px;        
+        margin-right: 16px;
+        border-radius: 4px;;
     }
     &-collapse-item.active{
         border: 1px solid #4483AD;

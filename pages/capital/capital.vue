@@ -2,14 +2,14 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-15 16:38:07
+ * @LastEditTime: 2023-02-17 11:00:26
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <!-- 课程班级 -->
 <template>
     <view class="capital-wrap">
-        <u-popup v-model="show" :round="10" border-radius="30" mode="bottom" closeable @close="close" @open="open" >
+        <u-popup v-model="show" :show="show" :round="10" border-radius="30" mode="bottom" closeable @close="close" @open="open" >
             <view class="capital-box">
                 <view>充幣</view>
                 <uni-data-select
@@ -40,19 +40,6 @@
                 <view class="capital-network">
                     <view>充幣地址</view>
                     <view>TFfmadhsadsjdashdsahdhsahCbeX</view>
-                    <!-- <u-input
-                        placeholder="后置图标"
-                        /> -->
-                        <!-- <u-input placeholder="请输入集装箱号" border="surround"></u-input>		 -->
-                   
-                    <!-- <u-input
-                        placeholder="后置图标"
-                       
-                    >
-                    <template slot="suffix">
-                        <u-icon name="file-text-fill"  />
-                    </template>
-                </u-input> -->
                 </view>
                 <view class="capital-warn-wrap">
                     <u-icon name="warning" class="capital-warn-icon"></u-icon>
@@ -78,6 +65,7 @@ export default {
 		return {
             value:'',
             coinRecharge:'',
+            flag:true,
             rechargeList:[
                 { value: 0, text: "數字資產錢包賬戶" },
 				{ value: 1, text: "兌換法幣至賬戶(Card Account 1)" },
@@ -91,7 +79,7 @@ export default {
         }
 	},
     mounted() {
-        console.log('80808')
+        console.log('80808',this.show,)
     },
 	methods: {
         open() {

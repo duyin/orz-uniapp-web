@@ -1,10 +1,10 @@
 <!-- 个人中心 -->
 <template>
 	<view class="components-theme">
-	 <view class="me-header">
+	 <view class="me-header"  @click="userHandle">
 		<view class="me-header-info">
 			<!-- <u-icon name="account-fill" class="me-img"></u-icon> -->
-			<u-avatar :src="src" size="64" style="margin-right:8px;"></u-avatar>
+			<u-avatar :src="src" size="32" style="margin-right:8px;"></u-avatar>
 			<view class="me-header-text">
                <view>Rhett Fang</view>
 			   <view>aaaa****@gmail.com</view>
@@ -17,8 +17,8 @@
 	 <view class="me-list-wrap">
 		<view class="me-list-item">
 			<u-icon name="photo" class="me-img"></u-icon><view class="me-title">认证信息</view>
-			<view>
-				未认证
+			<view class="me-auth-wrap">
+				<text>未认证</text>
 				<u-icon name="arrow-right"></u-icon>
 			</view>
 		</view>
@@ -91,6 +91,11 @@
 					url: '../me/aboutOrz'
 				})
 			},
+			userHandle(){
+				uni.navigateTo({
+					url: '../me/aboutMe'
+				})
+			},
 			securityHandle(){
 				uni.navigateTo({
 					url: '../me/security'
@@ -129,6 +134,9 @@
 			margin-top:40rpx;
 			width: calc(100% - 24px);
 			margin:0 auto;
+		}
+		&-auth-wrap{
+			display: flex;
 		}
 		&-list-item{
 			display: flex;

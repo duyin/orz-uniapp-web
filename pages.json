@@ -21,6 +21,13 @@
 			}
 		},
 		{
+			"path": "pages/me/aboutMe",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/me/aboutOrz",
 			"style": {
 				"navigationBarTitleText": "关于",
@@ -36,6 +43,20 @@
 		},
 		{
 			"path": "pages/capital/accountbill",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/me/applyCreditCard",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/me/creditStep",
 			"style": {
 				"navigationBarTitleText": "关于",
 				"navigationStyle": "custom"
@@ -113,25 +134,25 @@
 				"navigationStyle": "custom"
 			}
 		},
-		{
-			"path": "pages/design",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/design",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/main/customCamera",
 			"style": {
 				"navigationBarTitleText": "自定义相机/图片编辑器"
 			}
 		},
-		{
-			"path": "pages/main/posterList",
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": "海报设计工具"
-			}
-		},
+		// {
+		// 	"path": "pages/main/posterList",
+		// 	"style": {
+		// 		"navigationStyle": "custom",
+		// 		"navigationBarTitleText": "海报设计工具"
+		// 	}
+		// },
 		{
 			"path": "pages/main/posterImg",
 			"style": {
@@ -217,13 +238,13 @@
 						"navigationStyle": "custom"
 					}
 				},
-				{
-					"path": "course",
-					"style": {
-						"navigationBarTitleText": "班级课程",
-						"navigationStyle": "custom"
-					}
-				},
+				// {
+				// 	"path": "course",
+				// 	"style": {
+				// 		"navigationBarTitleText": "班级课程",
+				// 		"navigationStyle": "custom"
+				// 	}
+				// },
 				{
 					"path": "openDocument",
 					"style": {
@@ -276,20 +297,20 @@
 						"navigationBarTitleText": "摄影师资料"
 					}
 				},
-				{
-					"path": "photoWall/photoAll",
-					"style": {
-						"navigationStyle": "custom",
-						"navigationBarTitleText": "照片墙首页"
-					}
-				},
-				{
-					"path": "photoWall/timeLine",
-					"style": {
-						"navigationStyle": "custom",
-						"navigationBarTitleText": "照片墙第二页"
-					}
-				},
+				// {
+				// 	"path": "photoWall/photoAll",
+				// 	"style": {
+				// 		"navigationStyle": "custom",
+				// 		"navigationBarTitleText": "照片墙首页"
+				// 	}
+				// },
+				// {
+				// 	"path": "photoWall/timeLine",
+				// 	"style": {
+				// 		"navigationStyle": "custom",
+				// 		"navigationBarTitleText": "照片墙第二页"
+				// 	}
+				// },
 				{
 					"path": "photoWall/imageList",
 					"style": {
@@ -304,13 +325,13 @@
 						"navigationBarTitleText": "课程表"
 					}
 				},
-				{
-					"path": "category",
-					"style": {
-						"navigationStyle": "custom",
-						"navigationBarTitleText": "技术栈类目"
-					}
-				},
+				// {
+				// 	"path": "category",
+				// 	"style": {
+				// 		"navigationStyle": "custom",
+				// 		"navigationBarTitleText": "技术栈类目"
+				// 	}
+				// },
 				{
 					"path": "imageEditor",
 					"style": {
@@ -475,13 +496,13 @@
 		{
 			"root": "os_project",
 			"pages": [
-				{
-					"path": "index",
-					"style": {
-						"navigationBarTitleText": "客户定制",
-						"navigationStyle": "custom"
-					}
-				},
+				// {
+				// 	"path": "index",
+				// 	"style": {
+				// 		"navigationBarTitleText": "客户定制",
+				// 		"navigationStyle": "custom"
+				// 	}
+				// },
 				{
 					"path": "workOrder/index",
 					"style" : {

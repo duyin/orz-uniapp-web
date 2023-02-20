@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-16 10:15:59
+ * @LastEditTime: 2023-02-17 11:06:36
  * @FilePath: /orz-uniapp/pages/index/search.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -21,15 +21,15 @@
 		</view>
 		<view class="account-list-item" @click="extractHandle">
 			<u-icon name="photo" class="me-img" />
-			<view>转账</view>
+			<view>提取</view>
 		</view>
 		<view class="account-list-item">
 			<u-icon name="photo" class="me-img" />
 			<view>兑换</view>
 		</view>
-		<view class="account-list-item">
+		<view class="account-list-item"  @click="transferHandle" >
 			<u-icon name="photo" class="me-img" />
-			<view>跨境速汇</view>
+			<view>转移</view>
 		</view>
 		<view class="account-list-item" @click="accountHandle">
 			<u-icon name="photo" class="me-img" />
@@ -126,20 +126,24 @@
 	  <view style="height: 120rpx;width: 1rpx;"></view>
 	  <capital :show="isCapital" @closeFn="closeFn"/>
 	  <extract :visible="isExtract" @closeExtractFn="closeExtractFn"/>
+	  <transfer :visible="isTransfer" @closeExtractFn="closeExtractFn"/>
+	  
 	</view>
 </template>
 
 <script>
 import capital from '../capital/capital'
 import extract from '../capital/extract'
+import transfer from '../capital/transfer'
 	export default {
 		data() {
 			return {
 				isCapital:false,
-				isExtract:false
+				isExtract:false,
+				isTransfer:false
 			}
 		},
-		components: { capital,extract},
+		components: { capital,extract,transfer},
 		mounted() {
 
 		},
@@ -156,11 +160,13 @@ import extract from '../capital/extract'
 			},
 			closeFn() {
 				this.isCapital = false
-			
-				// console.log('close');
 			},
 			closeExtractFn(){
 				this.isExtract = false
+				this.isTransfer = false
+			},
+			transferHandle(){
+				this.isTransfer = true
 			},
 			accountHandle(){
 				uni.navigateTo({

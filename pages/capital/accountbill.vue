@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-16 10:45:48
+ * @LastEditTime: 2023-02-17 11:02:07
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -64,7 +64,8 @@ export default {
 	methods: {
         clickHandle(key){
             console.log(key);
-            this.billCount = key
+            const { index } = key
+            this.billCount = index
         },
 	}
 };

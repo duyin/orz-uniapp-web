@@ -2,7 +2,6 @@
 	<view class="components-home">
 		<view style="margin-top:-50rpx;height: 486rpx; position: relative;margin-bottom: 80rpx;">
 			<image src='https://zhoukaiwen.com/img/wccQQP.png' mode='widthFix' class='png' style='width:100%;height:486rpx'></image>
-			<!--  -->
 		</view>
 		
 		<swiper class="card-swiper round-dot" previous-margin="1rpx" :indicator-dots="false" :circular="true" :autoplay="true" interval="5000"
