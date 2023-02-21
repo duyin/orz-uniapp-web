@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-20 16:45:15
+ * @LastEditTime: 2023-02-21 16:30:37
  * @FilePath: /orz-uniapp/pages/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,7 +25,7 @@
                <view class="home-main-title">Tom Card Treasury</view>
                <view class="home-main-title">0.00 HKD</view>
                <view class="home-card-box">
-                <view class="home-card-box-item">查看所有卡片</view>
+                <view class="home-card-box-item"  @click="viewHandle">查看所有卡片</view>
                 <view class="home-card-box-item" @click="applyHandle">申请卡片</view>
                </view>
                <view class="home-created">
@@ -68,6 +68,11 @@
 			applyHandle(){
                 uni.navigateTo({
 					url: '../me/applyCreditCard'
+				})
+            },
+            viewHandle(){
+                uni.navigateTo({
+					url: '../me/cardlist'
 				})
             }
 		},

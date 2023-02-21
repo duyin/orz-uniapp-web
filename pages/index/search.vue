@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-17 11:06:36
+ * @LastEditTime: 2023-02-21 18:06:28
  * @FilePath: /orz-uniapp/pages/index/search.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -39,7 +39,7 @@
 	  <view class="account-main">
 		<view class="account-main-title">法币账户 <text class="account-main-subtitle">账户号码: 002-011-5224818-001</text></view>
 		<view>
-			<view class="account-main-content">
+			<view class="account-main-content"  @click="detailHandle">
 				<view class="account-main-item">
 					<u-icon name="photo" class="me-img" />
 					<view class="account-main-text">
@@ -172,6 +172,12 @@ import transfer from '../capital/transfer'
 				uni.navigateTo({
 					url: '../capital/accountbill'
 				})
+			},
+			detailHandle(){
+				uni.navigateTo({
+					url: '../me/assetsDetail'
+				})
+                
 			}
 		}
 	}

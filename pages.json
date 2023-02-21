@@ -35,6 +35,20 @@
 			}
 		},
 		{
+			"path": "pages/me/cardlist",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/me/assetsDetail",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/me/security",
 			"style": {
 				"navigationBarTitleText": "关于",
