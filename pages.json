@@ -97,13 +97,13 @@
 				"navigationStyle": "custom"
 			}
 		},
-		{
-			"path": "pages/me/mentalTest/index",
-			"style": {
-				"navigationBarTitleText": "答题测试",
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/me/mentalTest/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "答题测试",
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/me/mentalTest/explain",
 			"style": {
@@ -142,12 +142,12 @@
 				"navigationStyle": "custom"
 			}
 		},
-		{
-			"path": "pages/timeline",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/timeline",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		// {
 		// 	"path": "pages/design",
 		// 	"style": {
@@ -292,12 +292,12 @@
 						"navigationBarTitleText": "模拟数据加载"
 					}
 				},
-				{
-					"path": "keyboard",
-					"style": {
-						"navigationStyle": "custom"
-					}
-				},
+				// {
+				// 	"path": "keyboard",
+				// 	"style": {
+				// 		"navigationStyle": "custom"
+				// 	}
+				// },
 				{
 					"path": "drag_demo/index",
 					"style": {
@@ -497,14 +497,14 @@
 						"navigationStyle": "custom",
 						"navigationBarTitleText": "通用详情页"
 					}
-				},
-				{
-					"path": "details_wares",
-					"style": {
-						"navigationStyle": "custom",
-						"navigationBarTitleText": "商品详情页"
-					}
 				}
+				// {
+				// 	"path": "details_wares",
+				// 	"style": {
+				// 		"navigationStyle": "custom",
+				// 		"navigationBarTitleText": "商品详情页"
+				// 	}
+				// }
 			]
 		},
 		{
