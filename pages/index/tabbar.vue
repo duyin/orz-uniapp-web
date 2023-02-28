@@ -112,7 +112,7 @@
 				uni.showLoading({
 					title: '加载中'
 				});
-				request.httpRequest(opts).then(res => {
+				request.http(opts).then(res => {
 					// console.log(res);
 					uni.hideLoading();
 					if (res.statusCode == 200) {

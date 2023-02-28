@@ -6,9 +6,9 @@ let baseUrl;
 // 不带token请求
 const httpRequest = (opts, data) => {
 	if(opts.type == 2){
-		baseUrl = 'https://www.zhoukaiwen.com/';
+		baseUrl = ' https://dev.orzcash.com/';
 	}else{
-		baseUrl = 'https://api.zhoukaiwen.com/';
+		baseUrl = ' https://dev.orzcash.com/';
 	}
 	uni.onNetworkStatusChange(function(res) {
 		if (!res.isConnected) {
@@ -50,9 +50,9 @@ const httpRequest = (opts, data) => {
 //带Token请求
 const httpTokenRequest = (opts, data) => {
 	if(opts.type == 2){
-		baseUrl = 'https://www.zhoukaiwen.com/';
+		baseUrl = 'https://dev.orzcash.com/';
 	}else{
-		baseUrl = 'https://api.zhoukaiwen.com/';
+		baseUrl = 'https://dev.orzcash.com/';
 	}
 	uni.onNetworkStatusChange(function(res) {
 		if (!res.isConnected) {

@@ -7,90 +7,62 @@
 		<!-- 标题 -->
 		<view class="t-b">{{ title }}</view>
 		<view class="title">加密资产消费新方案</view>
-		<form class="cl">
-			<view class="t-a">
-				<view class="title">电子邮件*</view>
-				<input type="text" placeholder="请输入邮箱"  v-model="loginForm.email" />
-			</view>
-			<view class="t-a">
-				<view class="title">密码</view>
-				<input type="text"  placeholder="请输入密码" v-model="loginForm.passwd" />
-			</view>
-			
-			<button @tap="login()">登 录</button>
-		</form>
-		<view class="account-text">没有账户?<text class="register">在这里注册</text></view>
-	    <view>登陸註冊即通過ORZ的使用條例和隱私政策</view>
+		<view class="swiper-box">
+            <u-swiper
+                :list="list5"
+                @change="e => current = e.current"
+                :autoplay="false"
+                :current="current"
+        >
+            <view
+                    slot="indicator"
+                    class="indicator"
+            >
+                <view
+                        class="indicator__dot"
+                     
+                        v-for="(item, index) in list5"
+                        @click="(event)=>dotHandle(event,index)"
+                        :key="index"
+                        :class="[index === current && 'indicator__dot--active']"
+                >
+                </view>
+            </view>
+        </u-swiper>
+        </view>
+        <view class="orz-btn" @click="RegisterHandle">Register a orz account</view>
+        <view class="orz-btn" @click="LoginHandle">Login  orz account</view>
 	</view>
 </template>
 <script>
-import request from '@/common/request.js';
 export default {
 	data() {
 		return {
+            current:0,
 			title: 'ORZCash', //填写logo或者app名称，也可以用：欢迎回来，看您需求
-			second: 60, //默认60秒
-			showText: true, //判断短信是否发送
-			loginForm:{
-				email:'',
-				passwd:''
-			}
+            list5: [
+                    'https://cdn.uviewui.com/uview/swiper/swiper3.png',
+                    'https://cdn.uviewui.com/uview/swiper/swiper2.png',
+                    'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+                ],
 		};
 	},
 	onLoad() {},
 	methods: {
-		//当前登录按钮操作
-		async login() {
-			var that = this;
-		    if(!this.loginForm.email){
-				uni.showToast({ title: '请输入邮箱!', icon: 'none' });
-				return;
-			}
-			if(!this.loginForm.passwd){
-				uni.showToast({ title: '请输入密码!', icon: 'none' });
-				return;
-			}
-			const opts = {
-				url: 'api/user/login ',
-				method: 'post',
-			};
-			const { data } = await request.httpRequest(opts,this.loginForm)
-                console.log(data,'data')
-			uni.navigateTo({
-				url: '../../pages/index/tabbar'
-			})
-		},
-		//获取短信验证码
-		getCode() {
-			var that = this;
-			var interval = setInterval(() => {
-				that.showText = false;
-				var times = that.second - 1;
-				//that.second = times<10?'0'+times:times ;//小于10秒补 0
-				that.second = times;
-				console.log(times);
-			}, 1000);
-			setTimeout(() => {
-				clearInterval(interval);
-				that.second = 60;
-				that.showText = true;
-			}, 60000);
-			//这里请求后台获取短信验证码
-			uni.request({
-				//......//此处省略
-				success: function(res) {
-					that.showText = false;
-				}
-			});
-		},
-		//等三方微信登录
-		wxLogin() {
-			uni.showToast({ title: '微信登录', icon: 'none' });
-		},
-		//第三方支付宝登录
-		zfbLogin() {
-			uni.showToast({ title: '支付宝登录', icon: 'none' });
-		}
+		dotHandle(event,index){
+         console.log(event,index)
+         this.current = index
+        },
+        RegisterHandle(){
+            uni.navigateTo({
+                url: '../register/index'
+            })
+        },
+        LoginHandle(){
+            uni.navigateTo({
+                url: '../login/index1'
+            })
+        }
 	}
 };
 </script>
@@ -98,8 +70,26 @@ export default {
 .img-a {
 	position: absolute;
 	width: 100%;
-	top: -150rpx;
+	top: 50rpx;
 	right: 0;
+}
+.swiper-box{
+    margin-top:40px;
+}
+.orz-btn{
+    padding: 8px 16px;
+    text-align: center;
+    margin: 24px auto;
+    border:1px solid #ccc;
+    border-radius: 8px;;
+    background: #000;
+    color:#fff;
+}
+.register-header{
+    display: flex;
+}
+.register-left{
+    margin-right:8px;
 }
 .title{
 	margin-top:8px;
@@ -174,7 +164,7 @@ export default {
 	text-align: left;
 	font-size: 46rpx;
 	color: #000;
-	padding: 300rpx 0 30rpx 0;
+	padding: 100rpx 0 30rpx 0;
 	font-weight: bold;
 }
 .t-login .t-b2 {
@@ -246,4 +236,36 @@ export default {
 	height: 0;
 	content: '\20';
 }
+</style>
+<style lang="scss">
+.indicator {
+        @include flex(row);
+        justify-content: center;
+        &__dot {
+             height: 10px;
+             width: 10px;
+             border-radius: 100px;
+             background-color: rgba(255, 255, 255, 0.35);
+             margin: 0 5px;
+             transition: background-color 0.3s;
+    
+            &--active {
+                 background-color: #ffffff;
+             }
+        }
+    }
+
+    .indicator-num {
+        padding: 2px 0;
+        background-color: rgba(0, 0, 0, 0.35);
+        border-radius: 100px;
+        width: 35px;
+        @include flex;
+        justify-content: center;
+
+        &__text {
+             color: #FFFFFF;
+             font-size: 12px;
+         }
+    }
 </style>

@@ -5,14 +5,30 @@
 		"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
 	},
 	"pages": [ 
-		// {
-		// 	"path": "tn_components/login/index1",
-		// 	"style": {
-		// 		"navigationBarTitleText": "",
-		// 		"navigationBarBackgroundColor":"#ffffff",
-		// 		"titleNView": false
-		// 	}
-		// },
+		{
+			"path": "tn_components/swiperLogin/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor":"#ffffff",
+				"titleNView": false
+			}
+		},
+		{
+			"path": "tn_components/register/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor":"#ffffff",
+				"titleNView": false
+			}
+		},
+		{
+			"path": "tn_components/login/index1",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor":"#ffffff",
+				"titleNView": false
+			}
+		},
 		{
 			"path": "pages/index/tabbar",
 			"style": {
