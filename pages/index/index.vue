@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-17 11:25:37
+ * @LastEditTime: 2023-03-01 14:49:41
  * @FilePath: /orz-uniapp/pages/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,7 +14,7 @@
 			<view class="home-phone-box">
 				<!-- <u-icon name="photo" class="me-img" /> -->
 				<u-avatar :src="src" size="64" style="margin-right:8px;"></u-avatar>
-				<text>Rhett Fang</text>
+				<text>{{userInfo.name }}</text>
 			</view>
 			<view>
 				<u-icon name="scan" class="me-scan" />
@@ -65,6 +65,7 @@
 <script>
 	import request from '@/common/request.js';
     import ApplayCard from './components/ApplayCard.vue';
+	import { mapState } from "vuex";
 	export default {
 		data() {
 			return {
@@ -74,8 +75,11 @@
 			}
 		},
 		components: {ApplayCard},
+		computed: {
+			...mapState('app',['userInfo'])
+		},
 		mounted() {
-			
+			console.log(this.userInfo,'indexpage')
 		},
 		methods: {
 			

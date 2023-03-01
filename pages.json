@@ -22,6 +22,14 @@
 			}
 		},
 		{
+			"path": "tn_components/resetRegister/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor":"#ffffff",
+				"titleNView": false
+			}
+		},
+		{
 			"path": "tn_components/login/index1",
 			"style": {
 				"navigationBarTitleText": "",

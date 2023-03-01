@@ -59,13 +59,40 @@
 				<view class="title">验证码</view>
 				<input type="text" placeholder="请输入验证码" v-model="form.emailCode" />
 			</view>
-			<view class="t-a">
+			<view class="t-a password-box">
 				<view class="title">密码</view>
-				<input type="text" placeholder="请输入密码" v-model="form.passwd" />
+				<!-- <u-input :type="{isText?'text':'password'}" placeholder="请输入密码" v-model="form.passwd" >
+                    <template slot="suffix">
+                        <u-icon :name="{isText?'eye-fill':'eye'}" @click="!isText" color="#247CFF"></u-icon>
+                    </template>
+                </u-input> -->
+
+                <u-input v-show="isText === true" placeholder="请再次输入密码" border="none" v-model="form.passwd" class="input_class_pwd" :password="true">
+                    <template slot="suffix">
+                        <u-icon name="eye-off" @click="isText = false" size="18"></u-icon>
+                    </template>
+                </u-input>
+                <u-input v-show="isText === false" placeholder="请再次输入密码" border="none" v-model="form.passwd" class="input_class_pwd" :password="false">
+                    <template slot="suffix">
+                        <u-icon name="eye-fill" @click="isText = true" color="#247CFF"></u-icon>
+                    </template>
+                </u-input>
+
+
 			</view>
-			<view class="t-a">
+			<view class="t-a password-box">
 				<view class="title">确认密码</view>
-				<input type="text" placeholder="请输入密码" v-model="form.confirmPasswd" />
+				<!-- <input type="password" placeholder="请输入密码" v-model="form.confirmPasswd" /> -->
+                <u-input v-show="isConfirmText === true" placeholder="请再次输入密码" border="none" v-model="form.confirmPasswd" class="input_class_pwd" :password="true">
+                    <template slot="suffix">
+                        <u-icon name="eye-off" @click="isConfirmText = false" size="18"></u-icon>
+                    </template>
+                </u-input>
+                <u-input v-show="isConfirmText === false" placeholder="请再次输入密码" border="none" v-model="form.confirmPasswd" class="input_class_pwd" :password="false">
+                    <template slot="suffix">
+                        <u-icon name="eye-fill" @click="isConfirmText = true" color="#247CFF"></u-icon>
+                    </template>
+                </u-input>
 			</view>
             <view class="t-a">
 				<view class="title">邀请码（选填）</view>
@@ -89,6 +116,8 @@ export default {
             isRegister:false,
             tips: '',
 		    tipValue: '',
+            isText:true,
+            isConfirmText:true,
             form:{
                 firstName: "",
                 lastName:"",
@@ -156,7 +185,7 @@ export default {
 				// 		console.log('数据请求错误～');
 				// 	}
 				// });
-                const { data } = await request.httpRequest(opts,{email: this.form.email})
+                const { data } = await request.httpRequest(opts,{email: this.form.email,type:'register'})
                 console.log(data,'data')
                 setTimeout(() => {
                    
@@ -178,7 +207,7 @@ export default {
 	}
 };
 </script>
-<style>
+<style lang="scss">
 .img-a {
 	position: absolute;
 	width: 100%;
@@ -216,7 +245,16 @@ export default {
 	font-size: 28rpx;
 	color: #000;
 }
-
+.password-box {
+    ::v-deep{
+        .u-input__content{
+            border:1px solid #ccc;
+            border-radius: 3px;
+            padding:0 10px 0 12px;
+            height: 45px;
+        }
+    }
+}
 .t-login button {
 	font-size: 28rpx;
 	background: #5677fc;
@@ -268,7 +306,7 @@ export default {
 	text-align: left;
 	font-size: 46rpx;
 	color: #000;
-	padding: 300rpx 0 30rpx 0;
+	padding: 50rpx 0 30rpx 0;
 	font-weight: bold;
 }
 .t-login .t-b2 {
@@ -315,7 +353,7 @@ export default {
 
 .t-login .t-f {
 	text-align: center;
-	margin: 200rpx 0 0 0;
+	margin: 100rpx 0 0 0;
 	color: #666;
 }
 

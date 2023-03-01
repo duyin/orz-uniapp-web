@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-21 16:30:37
+ * @LastEditTime: 2023-03-01 14:52:20
  * @FilePath: /orz-uniapp/pages/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,7 +14,7 @@
 			<view class="home-phone-box">
 				<!-- <u-icon name="photo" class="me-img" /> -->
 				<u-avatar :src="src" size="32" style="margin-right:8px;"></u-avatar>
-				<text>Rhett Fang</text>
+				<text>{{userInfo.name }}</text>
 			</view>
 			<view>
 				<u-icon name="scan" class="me-scan" />
@@ -22,7 +22,7 @@
 			</view>
 			<view class="home-main">
 		       <view class="home-main-title">Card Account</view>
-               <view class="home-main-title">Tom Card Treasury</view>
+               <view class="home-main-title">{{ userInfo.name }} Card Treasury</view>
                <view class="home-main-title">0.00 HKD</view>
                <view class="home-card-box">
                 <view class="home-card-box-item"  @click="viewHandle">查看所有卡片</view>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-   
+   	import { mapState } from "vuex";
 	export default {
 		data() {
 			return {
@@ -60,7 +60,9 @@
 				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 			}
 		},
-		
+		computed: {
+			...mapState('app',['userInfo'])
+		},
 		mounted() {
 			
 		},

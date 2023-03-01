@@ -6,8 +6,8 @@
 			<!-- <u-icon name="account-fill" class="me-img"></u-icon> -->
 			<u-avatar :src="src" size="32" style="margin-right:8px;"></u-avatar>
 			<view class="me-header-text">
-               <view>Rhett Fang</view>
-			   <view>aaaa****@gmail.com</view>
+               <view>{{ userInfo.name }}</view>
+			   <view>{{ userInfo.email }}</view>
 			</view>
 		</view>
 		<view>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+ 	import { mapState } from "vuex";
 	export default {
 		data() {
 			return {
@@ -80,6 +81,9 @@
 				console.log(val)
 				
 			}
+		},
+		computed: {
+			...mapState('app',['userInfo'])
 		},
 		mounted() {
 			

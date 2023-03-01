@@ -12,33 +12,56 @@
 				<view class="title">电子邮件*</view>
 				<input type="text" placeholder="请输入邮箱"  v-model="loginForm.email" />
 			</view>
-			<view class="t-a">
+			<view class="t-a password-box">
 				<view class="title">密码</view>
-				<input type="text"  placeholder="请输入密码" v-model="loginForm.passwd" />
+				<!-- <input type="password"  placeholder="请输入密码" v-model="loginForm.passwd" /> -->
+				<u-input v-show="isText === true" placeholder="请输入密码" border="none" v-model="loginForm.passwd" class="input_class_pwd" :password="true">
+                    <template slot="suffix">
+                        <u-icon name="eye-off" @click="isText = false" size="18"></u-icon>
+                    </template>
+                </u-input>
+                <u-input v-show="isText === false" placeholder="请输入密码" border="none" v-model="loginForm.passwd" class="input_class_pwd" :password="false">
+                    <template slot="suffix">
+                        <u-icon name="eye-fill" @click="isText = true" color="#247CFF"></u-icon>
+                    </template>
+                </u-input>
 			</view>
 			
 			<button @tap="login()">登 录</button>
 		</form>
-		<view class="account-text">没有账户?<text class="register">在这里注册</text></view>
+		<view class="account-text">没有账户?<text class="register" @tap="registerFn">在这里注册</text> <text class="register resetPasswd" @tap="resetPassHandle">忘记密码</text></view>
 	    <view>登陸註冊即通過ORZ的使用條例和隱私政策</view>
 	</view>
 </template>
 <script>
 import request from '@/common/request.js';
+import Cookies from 'js-cookie'
+import { mapState,mapActions } from "vuex";
 export default {
 	data() {
+
 		return {
 			title: 'ORZCash', //填写logo或者app名称，也可以用：欢迎回来，看您需求
 			second: 60, //默认60秒
 			showText: true, //判断短信是否发送
+			isText:true,
 			loginForm:{
 				email:'',
-				passwd:''
+				passwd:'',
+				token:Cookies.get('token')||''
 			}
 		};
 	},
+
 	onLoad() {},
+	mounted() {
+		
+	},
+	computed: {
+		...mapState('app',['token'])
+	},
 	methods: {
+        ...mapActions('app',['setToken']),
 		//当前登录按钮操作
 		async login() {
 			var that = this;
@@ -54,8 +77,15 @@ export default {
 				url: 'api/user/login ',
 				method: 'post',
 			};
-			const { data } = await request.httpRequest(opts,this.loginForm)
-                console.log(data,'data')
+			const { data } = await request.httpTokenRequest(opts,this.loginForm)
+			console.log(data,'data')
+			if(data.code!==200){
+				uni.showToast({ title: data.message, icon: 'none' });
+				return;
+			}
+			Cookies.set('token',data.result.token)
+			uni.setStorageSync('token',data.result.token)
+			this.setToken(data.result.token)
 			uni.navigateTo({
 				url: '../../pages/index/tabbar'
 			})
@@ -83,18 +113,20 @@ export default {
 				}
 			});
 		},
-		//等三方微信登录
-		wxLogin() {
-			uni.showToast({ title: '微信登录', icon: 'none' });
+		resetPassHandle(){
+			uni.navigateTo({
+				url: '../resetRegister/index'
+			})
 		},
-		//第三方支付宝登录
-		zfbLogin() {
-			uni.showToast({ title: '支付宝登录', icon: 'none' });
+		registerFn(){
+			uni.navigateTo({
+				url: '../register/index'
+			})
 		}
 	}
 };
 </script>
-<style>
+<style lang="scss" scoped>
 .img-a {
 	position: absolute;
 	width: 100%;
@@ -112,6 +144,7 @@ export default {
 .account-text{
 	margin-top:8px;
 	margin-bottom: 8px;;
+	display: flex;
 }
 .img-b {
 	position: absolute;
@@ -119,6 +152,23 @@ export default {
 	bottom: 0;
 	left: -50rpx;
 	/* margin-bottom: -200rpx; */
+}
+.password-box {
+	margin-bottom:24px;
+    ::v-deep{
+        .u-input__content{
+            border:1px solid #ccc;
+            border-radius: 3px;
+            padding:0 10px 0 12px;
+            height: 45px;
+        }
+    }
+}
+.resetPasswd{
+	display: flex;
+	flex: 1;
+	cursor: pointer;
+	justify-content: flex-end;
 }
 .t-login {
 	width: 650rpx;

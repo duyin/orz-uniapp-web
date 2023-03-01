@@ -2,7 +2,7 @@
 // const baseUrl = 'https://cdn.zhoukaiwen.com/';
 // const baseUrl = 'https://www.zhoukaiwen.com/';
 let baseUrl;
-
+import Cookies from 'js-cookie'
 // 不带token请求
 const httpRequest = (opts, data) => {
 	if(opts.type == 2){
@@ -63,7 +63,8 @@ const httpTokenRequest = (opts, data) => {
 		}
 		return false
 	});
-	let token = uni.getStorageSync('token');
+	let token = Cookies.get('token') || uni.getStorageSync('token');
+	console.log(token,'token');
 	// hadToken()
 	if (token == '' || token == undefined || token == null) {
 		uni.showToast({
@@ -71,7 +72,7 @@ const httpTokenRequest = (opts, data) => {
 			icon: 'none',
 			complete: function() {
 				uni.reLaunch({
-					url: '/pages/login/index'
+					url: '/pages/login/index1'
 				});
 			}
 		});

@@ -30,7 +30,7 @@
                 <view class="me-list-item">
                    <view class="me-title">显示姓名</view>
                     <view>
-                      Rhett Fang
+                      Tom
                     </view>
                 </view>
                 <view class="me-list-item">

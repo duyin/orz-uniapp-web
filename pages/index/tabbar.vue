@@ -56,6 +56,7 @@
 	import news from "./news.vue";	//资讯
 	import me from "./me.vue";	//个人中心
 	import signlekyc from "../me/signlekyc.vue";
+	import { mapState,mapActions } from "vuex";
 	export default {
 		components: {
 			index,
@@ -76,34 +77,16 @@
 
 			};
 		},
-		// 分享小程序
-		onShareAppMessage(res) {
-			return {
-				title: '学技术·找案例，快来「前端铺子」吧！',
-				imageUrl: 'https://cdn.zhoukaiwen.com/qdpz_share.jpg',
-			};
+		computed: {
+			...mapState('app',['token','userInfo'])
 		},
-		onLoad(option){
-			console.log('来自页面:', option)
-			// wx.showShareMenu({
-			// 	withShareTicket: true
-			// })
-			if (option.type == 'matting') {
-				uni.navigateTo({
-					url: '../main/matting'
-				})
-				return
-			}
-		},
-		onShareTimeline() {
-			return {
-				title: '学技术·找案例，快来「前端铺子」吧！',
-			}
-		},
-		onShow() {
-			// this.getData();
+		mounted() {
+			
+			this.getUserInfo()
+			console.log(this.userInfo,'userInfo')
 		},
 		methods: {
+			...mapActions('app',['setUserInfo']),
 			getData() {
 				let opts = {
 					url: 'api/blog/list',
@@ -121,6 +104,21 @@
 						console.log('数据请求错误～');
 					}
 				});
+			},
+			async getUserInfo(){
+				const opts = {
+					url: 'api/user/info ',
+					method: 'post',
+				}
+				console.log(this.token,'token====')
+				const { data } = await request.httpTokenRequest(opts)
+				console.log(data.result,'data')
+				if(data.code!==200){
+					uni.showToast({ title: data.msg, icon: 'none' });
+					return;
+				}
+				this.setUserInfo(data.result)
+				uni.setStorageSync('userInfo',data.result)
 			},
 			ShowNews(e){
 				console.log(e)

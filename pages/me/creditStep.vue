@@ -157,7 +157,7 @@
 				<view>卡上名称：</view>
 				<view>
 					<u--input
-						placeholder="Rhett Fang"
+						placeholder="Tom"
 						border="surround"
 						v-model="value"
 						class="home-input-item"
@@ -166,7 +166,7 @@
 				<view>手机号码：</view>
 				<view>
 					<u--input
-						placeholder="Rhett Fang"
+						placeholder="Tom"
 						border="surround"
 						v-model="value"
 						class="home-input-item"

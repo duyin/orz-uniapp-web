@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-15 15:38:00
+ * @LastEditTime: 2023-03-01 15:29:13
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -17,8 +17,13 @@
             <view class="me-list-wrap">
                 <view class="me-list-item" @click="visionHandle">
                     <u-icon name="photo" class="me-img"></u-icon><view class="me-title">交易密码</view>
-                    <view>
-                        <u-icon name="arrow-right"></u-icon>
+                    <view class="me-auth-box">
+                        <view class="me-auth-security" v-if="!isAuth">未设置</view>
+                        <view class="me-auth-security" v-if="isAuth" @tap="editHandle">修改密码</view>
+                        <view>
+                            <u-icon name="arrow-right"></u-icon>
+                        </view>
+                       
                     </view>
                 </view>
                 <view class="me-list-item">
@@ -36,24 +41,33 @@
 	        </view>
             <view class="custom-outLogin">退出登录</view>
 		</view>
+        <edit-security :visible="isSecurity" @closeFn="closeFn"/>
 	</view>
 </template>
 
 <script>
+import editSecurity from './editSecurity'
 export default {
 	data() {
-		return {}
+		return {
+            isAuth:true,
+            isSecurity:false
+        }
 	},
-	onLoad() {
-		
-	},
+	components:{editSecurity},
 	computed: {
 	
 	},
 	methods: {
 		visionHandle(){
-			location.href="https://www.orzcash.com/#/clientkyc"
-		}
+			// location.href="https://www.orzcash.com/#/clientkyc"
+		},
+        closeFn(){
+          this.isSecurity = false;
+        },
+        editHandle(){
+            this.isSecurity = true;
+        }
 	}
 };
 </script>
@@ -64,6 +78,7 @@ page {
 	height: 100%;
 	background-color: #f2f2f2;
 }
+
 
 /* #endif */
 .custom-header{
@@ -117,6 +132,13 @@ page {
 			width: calc(100% - 24px);
 			margin:0 auto;
 		}
+        &-auth-box{
+            display: flex;
+            align-items: center;
+        }
+        &-auth-security{
+
+        }
 		&-list-item{
 			display: flex;
 			justify-content: space-between;
