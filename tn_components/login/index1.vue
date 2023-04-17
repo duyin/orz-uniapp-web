@@ -85,6 +85,7 @@ export default {
 			}
 			Cookies.set('token',data.result.token)
 			uni.setStorageSync('token',data.result.token)
+		
 			this.setToken(data.result.token)
 			uni.navigateTo({
 				url: '../../pages/index/tabbar'

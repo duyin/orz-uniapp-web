@@ -119,6 +119,7 @@
 				}
 				this.setUserInfo(data.result)
 				uni.setStorageSync('userInfo',data.result)
+				uni.setStorageSync('kycStatus',1)
 			},
 			ShowNews(e){
 				console.log(e)

@@ -15,7 +15,7 @@
 		</view>
 	 </view>
 	 <view class="me-list-wrap">
-		<view class="me-list-item">
+		<view class="me-list-item" @tap="authKycHandle">
 			<u-icon name="photo" class="me-img"></u-icon><view class="me-title">认证信息</view>
 			<view class="me-auth-wrap">
 				<text>未认证</text>
@@ -98,6 +98,12 @@
 			userHandle(){
 				uni.navigateTo({
 					url: '../me/aboutMe'
+				})
+			},
+			authKycHandle(){
+				// location.href="http://localhost:9527/#/clientkyc?form=duyin"
+				uni.navigateTo({
+					url: '../me/personkyc'
 				})
 			},
 			securityHandle(){

@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-17 11:19:25
+ * @LastEditTime: 2023-03-06 16:41:13
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -18,37 +18,37 @@
                 <u-icon name="account-fill" class="custom-me-img"></u-icon>
                
             </view>
-            <view class="custom-vision">rhett****@gmail.com</view>
+            <view class="custom-vision">{{ userInfo.email }}</view>
             <view class="custom-vision">已验证</view>
             <view class="me-list-wrap">
                 <view class="me-list-item" @click="visionHandle">
                     <view class="me-title">账户号码</view>
                     <view>
-                      002-011-5224818
+                     {{ userInfo.accountNumber }}
                     </view>
                 </view>
                 <view class="me-list-item">
                    <view class="me-title">显示姓名</view>
                     <view>
-                      Tom
+                      {{ userInfo.name }}
                     </view>
                 </view>
                 <view class="me-list-item">
                    <view class="me-title">电话号码</view>
                     <view>
-                      (86)176******00
+                      {{ userInfo.phone||'--'}}
                     </view>
                 </view>
                 <view class="me-list-item">
                    <view class="me-title">地址</view>
                     <view>
-                      xxxxxxXXxxxxxxxxxxxxxxxx
+                      {{ userInfo.address||'--' }}
                     </view>
                 </view>
                 <view class="me-list-item">
                    <view class="me-title">注册时间</view>
                     <view>
-                      2023-01-31 11:00:09
+                      {{ userInfo.createTime }}
                     </view>
                 </view>
 	        </view>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+	import { mapState } from "vuex";
 export default {
 	data() {
 		return {}
@@ -64,9 +65,9 @@ export default {
 	onLoad() {
 		
 	},
-	computed: {
-	
-	},
+  computed: {
+    ...mapState('app',['userInfo'])
+  },
 	methods: {
 		visionHandle(){
 			location.href="https://www.orzcash.com/#/clientkyc"

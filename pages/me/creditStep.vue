@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-22 10:55:59
+ * @LastEditTime: 2023-04-07 17:29:55
  * @FilePath: /orz-uniapp/pages/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -24,12 +24,13 @@
 				</u-steps>
 			</view>
 		    <view v-if="currentIndex==0" class="home-main">
-                <view>身份证件</view>
+                <!-- <view>身份证件</view>
 				<view>選擇您的身份證類型：</view>
 				<u-tabs :list="list" 
-      :is-scroll="false" bar-width="50" active-color="orange"  :current="count" @change="clickHandle" class="conversion-tabs-list"></u-tabs>
-	            <view v-if="count==1">
-					<view>上傳三張清晰的身份證照片(正面、背面和手持身份證照片)</view>
+      :is-scroll="false" bar-width="50" active-color="orange"  :current="count" @change="clickHandle" class="conversion-tabs-list"></u-tabs> -->
+	            <view>
+					<personkycStep  @submitCloseFn="submitCloseFn"/>
+					<!-- <view>上傳三張清晰的身份證照片(正面、背面和手持身份證照片)</view>
 					<view class="home-upload-wrap">
 						<view class="home-upload-item">
 							<view>身份证正面</view>
@@ -80,9 +81,9 @@
 						v-model="value"
 						class="home-input-item"
 					></u--input>
-					</view>
+					</view> -->
 				</view>
-				<view v-if="count==2" class="home-main">
+				<!-- <view v-if="count==2" class="home-main">
 					<view>護照</view>
 					<view>上傳護照的清晰照片。</view>
 					<view class="home-upload-wrap">
@@ -97,11 +98,28 @@
 						</view>
 						
 					</view>
-				</view>
+				</view> -->
 			</view> 
 			<view v-if="currentIndex==1" class="home-main">
               <view>ORZ提供的卡</view>
 			  <view>使用聯名信用卡，可以享受以下福利和特權</view>
+			  <view class="card-list">
+			    <u-radio-group
+					v-model="radiovalue1"
+					placement="row"
+					
+				>
+					<u-radio
+					:customStyle="{marginBottom: '8px'}"
+					v-for="(item, index) in radiolist1"
+					:key="index"
+					:label="item.name"
+					:name="item.name"
+					@change="radioChange"
+					>
+					</u-radio>
+				</u-radio-group>
+			  </view>
 			  <view class="home-step-two-footer">
 				<view>溫馨提示：</view>
 				<view>1、了解完整使用規則和費率，請參考交易規則與費率。</view>
@@ -109,21 +127,62 @@
 			  </view>
 			</view>
 			<view v-if="currentIndex==2" class="home-main">
-              <view>手机号码验证</view>
-			  <view>输入您的手机号码，点击“发送验证码“以通过短信接收。</view>
-			  <view>
-				<view
+				<view class="t-a">
+				<view class="title">电子邮件*</view>
+                <view
 					class="u-demo-block__content"
 					style="margin-top: 15px;"
 				>
 					<!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
 					<!-- #ifndef APP-NVUE -->
-					<u--input placeholder="手机号码">
+					<u--input placeholder="请输入邮箱"  v-model="form.email">
 					<!-- #endif -->
 					<!-- #ifdef APP-NVUE -->
-					<u--input placeholder="手机号码">
+					<u--input placeholder="请输入邮箱" v-model="form.email">
 					<!-- #endif -->
 						<template slot="suffix">
+							<u-code
+								ref="uCode"
+								@change="codeChange"
+								seconds="60"
+								changeText="X秒重新获取"
+							></u-code>
+							<u-button
+								@tap="getCode"
+								:text="tips"
+                                class="getBtn"
+								type="success"
+								size="mini"
+							></u-button>
+						</template>
+					<!-- #ifndef APP-NVUE -->
+					</u--input>
+					<!-- #endif -->
+					<!-- #ifdef APP-NVUE -->
+					</u--input>
+					<!-- #endif -->
+				</view>
+				<!-- <input type="text" placeholder="请输入邮箱" v-model="form.email" /> -->
+			</view>
+            <view class="t-a">
+				<view class="title">验证码</view>
+				<u--input type="text" placeholder="请输入验证码" v-model="form.emailCode" />
+			</view>
+              <!-- <view>手机号码验证</view>
+			  <view>输入您的手机号码，点击“发送验证码“以通过短信接收。</view> -->
+			  <!-- <view>
+				<view
+					class="u-demo-block__content"
+					style="margin-top: 15px;"
+				> -->
+					<!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
+					<!-- #ifndef APP-NVUE -->
+					<!-- <u--input placeholder="手机号码"> -->
+					<!-- #endif -->
+					<!-- #ifdef APP-NVUE -->
+					<!-- <u--input placeholder="手机号码"> -->
+					<!-- #endif -->
+						<!-- <template slot="suffix">
 							<u-code
 								ref="uCode"
 								@change="codeChange"
@@ -136,19 +195,19 @@
 								type="success"
 								size="mini"
 							></u-button>
-						</template>
+						</template> -->
 					<!-- #ifndef APP-NVUE -->
-					</u--input>
+					<!-- </u--input> -->
 					<!-- #endif -->
 					<!-- #ifdef APP-NVUE -->
-					</u--input>
+					<!-- </u--input> -->
 					<!-- #endif -->
-				</view>
+				<!-- </view>
 			  </view>
 			  <view class="home-step-three-footer">
 				<view>输入发送到您手机号码的授权码。</view>
 				<u-code-input v-model="codeValue"></u-code-input>
-			  </view>
+			  </view> -->
 			</view>
 			<view v-if="currentIndex==3" class="home-main">
               <view>您申请流程接近完成！</view>
@@ -198,13 +257,13 @@
 					<view class="home-apply-addition">申请附加卡</view>
 				</view>
 			</view>
-			<view class="home-next-wrap"  @click="nextHandle">{{currentIndex==4?'返回首页':'下一步'}}</view>
+			<view class="home-next-wrap"  @click="nextHandle" v-if="currentIndex!==0">{{currentIndex==4?'返回首页':'下一步'}}</view>
 		</view>
 </template>
 
 <script>
 	import request from '@/common/request.js';
-   
+    import personkycStep from './personkycStep'
 	export default {
 		data() {
 			return {
@@ -216,6 +275,23 @@
 				tips: '',
 				tipValue: '',
 				payValue:'',
+				radiovalue1: '虚拟卡',
+				form:{
+					email:'',
+					emailCode:'',
+				},
+				 radiolist1: [{
+					name: '塑料实体卡',
+					disabled: false
+				},
+				{
+				name: '黑金实体卡',
+				disabled: false
+				},
+				{
+				name: '虚拟卡',
+				disabled: false
+				}],
 				payList:[
 				{ value: 0, text: "到我的账户地址" },
 				{ value: 1, text: "到我的账户地址1" },
@@ -251,9 +327,12 @@
 				]
 			}
 		},
-		
+		components:{personkycStep},
 		mounted() {
-			
+			let kycStatus = uni.getStorageSync('kycStatus');
+			if(kycStatus=='3'){
+				this.currentIndex = 1
+			}
 		},
 		methods: {
 			stepApplyHandle(){
@@ -264,37 +343,100 @@
   				this.count = index
 			},
 			nextHandle(){
-				
-				
 				if(this.currentIndex==4){
 					this.currentIndex = 4
+					uni.navigateTo({
+						url: '../../pages/index/tabbar'
+					})
 				}else{
+					if(this.currentIndex==1){
+         				this.getCardIssue()
+					}
+                    if(this.currentIndex==3){
+						this.getCard()
+					}
 					this.currentIndex = this.currentIndex+1
 				}
+			},
+			async getCard(){
+				
+				let opts = {
+					url: 'api/user/card/get',
+					method: 'get',
+				};
+                const { data } = await request.httpTokenRequest(opts)
+                console.log(data,'data')
+			},
+			async getCardIssue(){
+				let opts = {
+					url: 'api/user/card/issue',
+					method: 'post',
+				};
+			     const params = {
+					"type": "virtual",
+					"productId": "600",
+					"embossedName":"OrzCash",
+					"cardSuffix":"",   //这个参数暂时保持未空，有值会发卡不成功
+					"xid":"",
+					"cardaccountid":'',
+				 }
+                const { data } = await request.httpTokenRequest(opts,params)
+                console.log(data,'data')
+			},
+		
+			submitCloseFn(){
+				this.nextHandle()
 			},
 			codeChange(text) {
 				this.tips = text;
 			},
-		getCode() {
-			if (this.$refs.uCode.canGetCode) {
-			// 模拟向后端请求验证码
-			uni.showLoading({
-				title: '正在获取验证码'
-			})
-			setTimeout(() => {
-				uni.hideLoading();
-				// 这里此提示会被this.start()方法中的提示覆盖
-				uni.$u.toast('验证码已发送');
-				// 通知验证码组件内部开始倒计时
-				this.$refs.uCode.start();
-			}, 2000);
-			} else {
-			uni.$u.toast('倒计时结束后再发送');
+			async getCode() {
+				if (this.$refs.uCode.canGetCode) {
+					// 模拟向后端请求验证码
+					// uni.showLoading({
+					//     title: '正在获取验证码'
+					// })
+					// uni.hideLoading();
+					this.$refs.uCode.start();
+				
+					let opts = {
+						url: 'api/email/code',
+						method: 'post',
+					};
+					// request.httpRequest(opts).then(res => {
+					// 	// console.log(res);
+					// 	uni.hideLoading();
+					// 	if (res.statusCode == 200) {
+					// 		this.message = res.data.data.length;
+					// 	} else {
+					// 		console.log('数据请求错误～');
+					// 	}
+					// });
+					const { data } = await request.httpRequest(opts,{email: this.form.email,type:'tradpasswd'})
+					console.log(data,'data')
+					setTimeout(() => {
+					
+						// 这里此提示会被this.start()方法中的提示覆盖
+						uni.$u.toast('验证码已发送');
+						// 通知验证码组件内部开始倒计时
+					
+					}, 2000);
+					// if (res.statusCode == 200) {
+					// 		this.message = res.data.data.length;
+					// 	} else {
+					// 		console.log('数据请求错误～');
+					// 	}
+					
+				} else {
+				uni.$u.toast('倒计时结束后再发送');
+				}
+			},
+			radioChange(n) {
+				console.log('radioChange', n);
+			},
+			change(e) {
+				console.log('change', e);
 			}
-		},
-		change(e) {
-			console.log('change', e);
-		}
 		},
 	};
 </script>
@@ -319,21 +461,21 @@
 			align-items: center;
 			padding: 24px;
 		    ::v-deep{
-				.u-steps-item__wrapper{
-					background:#f2f5f9 ;
-				}
+				// .u-steps-item__wrapper{
+				// 	background:#f2f5f9 ;
+				// }
 			}
 		}
-		&-step-header{
-			text-align: center;
-		}
-		&-step-subtitle{
-			font-weight: bold;
-			margin-top:10px;
-		}
-		&-step-content{
-			margin-top: 40px;;
-		}
+		// &-step-header{
+		// 	text-align: center;
+		// }
+		// &-step-subtitle{
+		// 	font-weight: bold;
+		// 	margin-top:10px;
+		// }
+		// &-step-content{
+		// 	margin-top: 40px;;
+		// }
 		&-apply-addition{
 			padding:10px 24px;
 			border:1px solid #ccc;
@@ -377,5 +519,9 @@
 			display: flex;
 		}
 	
+
+	}
+	.card-list{
+		margin-top:24px;
 	}
 </style>

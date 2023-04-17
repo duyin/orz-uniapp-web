@@ -6,11 +6,54 @@
 	},
 	"pages": [ 
 		{
-			"path": "tn_components/swiperLogin/index",
+			"path": "tn_components/Index/index",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationBarBackgroundColor":"#ffffff",
 				"titleNView": false
+			}
+		},
+		{
+			"path": "pages/me/clientApplyKyc",
+			"style": {
+				"navigationBarTitleText": "orz App",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/cardoverview/index",
+			"style": {
+				"navigationBarTitleText": "orz App",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "tn_components/cardApply/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor":"#ffffff",
+				"titleNView": false
+			}
+		},
+		{
+			"path": "pages/me/clientGrade",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/me/paySuccess",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/me/clientPay",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -31,6 +74,22 @@
 		},
 		{
 			"path": "tn_components/login/index1",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor":"#ffffff",
+				"titleNView": false
+			}
+		},
+		{
+			"path": "pages/injectassets/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor":"#ffffff",
+				"titleNView": false
+			}
+		},
+		{
+			"path": "pages/injectpay/index",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationBarBackgroundColor":"#ffffff",
@@ -111,6 +170,13 @@
 			"path": "pages/me/aboutMe",
 			"style": {
 				"navigationBarTitleText": "关于作者",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/me/personkyc",
+			"style": {
+				"navigationBarTitleText": "关于",
 				"navigationStyle": "custom"
 			}
 		},

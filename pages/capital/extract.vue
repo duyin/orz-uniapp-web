@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-17 11:00:59
+ * @LastEditTime: 2023-03-06 16:34:42
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -53,7 +53,7 @@
                                         </view>
                                     </view>
                                </view>
-                               <view class="capital-collapse-contentBtn">继续</view>
+                               <view class="capital-collapse-contentBtn" @tap="confirmOk">继续</view>
                             </view>  
                         </uni-collapse-item>  
                     </uni-collapse>
@@ -66,8 +66,7 @@
 </template>
 
 <script>
-// import uniDataSelect from '@/components/uni-data-select/uni-data-select.vue';
-// import uCollapse from '@/components/u-collapse/u-collapse.vue'
+import request from '@/common/request.js';
 export default {
     name:'Capital',
     props:{
@@ -141,6 +140,22 @@ export default {
            
            
         },
+        async confirmOk(){
+            let opts = {
+				url: 'api/user/transfer/create',
+				method: 'post',
+			};
+            const params = {
+                "amount": 10,
+                "asset": "USD",
+                "destinationUserId":"7e82d1dd-3438-48fd-80e9-26d8c51d56bc",
+                "description":"",
+                "xid":"test01",
+            }
+			const { data } = await request.httpTokenRequest(opts,params)
+            console.log(data,'data')
+           //  
+        },
         changeCollapse(){},
         closeCollapse(){},
         openCollapse(){},
@@ -184,6 +199,11 @@ export default {
     }
     &-collapse-main{
         margin-bottom:24px;
+        ::v-deep{
+            .uni-collapse-item__title.uni-collapse-item-border{
+                border:0;
+            }
+        }
     }
     &-network{
         margin-top:16px;
@@ -193,7 +213,7 @@ export default {
     }
     &-collapse-item{
         border: 1px solid #ccc;
-        padding: 16px;;
+        padding: 8px;;
         margin-bottom: 16px;
     }
     &-collapse-item.active{

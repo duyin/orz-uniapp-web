@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-21 16:33:38
+ * @LastEditTime: 2023-03-17 12:47:13
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,22 +14,22 @@
 			<block slot="content">View All Cards</block>
 		</cu-custom>
 		<view class="custom-wrap">
-		  <view v-for="item in list" class="custom-item">
+		  <view v-for="(item, index) in list" class="custom-item">
             <view class="custom-header">
 				<view class="custom-header-left"></view>
 				<view class="custom-header-right">
-					<view>{{ item.backName }}</view>
-					<view>{{ item.title }}</view>
+					<view class="custom-header-subTitle">{{ stringFn(item)}}<span @tap="()=>activeHandle(item,index)">{{ item.status=='pending-activation'?'未激活':'已激活' }}</span></view>
+					<view>{{ item.product.name }}</view>
 				</view>
 			</view>
 			<view class="custom-footer-item">
 				<view class="custom-footer-left">
-					<view>{{ item.balanceName }}</view>
-					<view>{{ item.balanceMoney }}</view>
+					<view>Card Balance</view>
+					<view>0.00</view>
 				</view>
 				<view class="custom-footer-right">
-					<view>{{ item.cardLimit }}</view>
-					<view>{{ item.CardLimitMoney }}</view>
+					<view>Card Limit</view>
+					<view>{{ item.availableLimit }}</view>
 				</view>
 			</view>
 		  </view>
@@ -39,42 +39,44 @@
 </template>
 
 <script>
+import request from '@/common/request.js';
 export default {
 	data() {
 		return {
+			activeText:'未激活',
 			list:[
-				{
-					backName:'**** **** 3035',
-					title:'ORZ WORLD MASTERCARD',
-					balanceName:'Card Balance',
-					balanceMoney:'0.00 HKD',
-					cardLimit:'Card Limit',
-					CardLimitMoney:'0.00 HKD'
-				},
-				{
-					backName:'**** **** 3036',
-					title:'ORZ WORLD MASTERCARD',
-					balanceName:'Card Balance',
-					balanceMoney:'0.00 HKD',
-					cardLimit:'Card Limit',
-					CardLimitMoney:'0.00 HKD'
-				},
-				{
-					backName:'**** **** 3037',
-					title:'ORZ WORLD MASTERCARD',
-					balanceName:'Card Balance',
-					balanceMoney:'0.00 HKD',
-					cardLimit:'Card Limit',
-					CardLimitMoney:'0.00 HKD'
-				},
-				{
-					backName:'**** **** 3038',
-					title:'ORZ WORLD MASTERCARD',
-					balanceName:'Card Balance',
-					balanceMoney:'0.00 HKD',
-					cardLimit:'Card Limit',
-					CardLimitMoney:'0.00 HKD'
-				}
+				// {
+				// 	backName:'**** **** 3035',
+				// 	title:'ORZ WORLD MASTERCARD',
+				// 	balanceName:'Card Balance',
+				// 	balanceMoney:'0.00 HKD',
+				// 	cardLimit:'Card Limit',
+				// 	CardLimitMoney:'0.00 HKD'
+				// },
+				// {
+				// 	backName:'**** **** 3036',
+				// 	title:'ORZ WORLD MASTERCARD',
+				// 	balanceName:'Card Balance',
+				// 	balanceMoney:'0.00 HKD',
+				// 	cardLimit:'Card Limit',
+				// 	CardLimitMoney:'0.00 HKD'
+				// },
+				// {
+				// 	backName:'**** **** 3037',
+				// 	title:'ORZ WORLD MASTERCARD',
+				// 	balanceName:'Card Balance',
+				// 	balanceMoney:'0.00 HKD',
+				// 	cardLimit:'Card Limit',
+				// 	CardLimitMoney:'0.00 HKD'
+				// },
+				// {
+				// 	backName:'**** **** 3038',
+				// 	title:'ORZ WORLD MASTERCARD',
+				// 	balanceName:'Card Balance',
+				// 	balanceMoney:'0.00 HKD',
+				// 	cardLimit:'Card Limit',
+				// 	CardLimitMoney:'0.00 HKD'
+				// }
 
 			]
 		}
@@ -82,13 +84,46 @@ export default {
 	onLoad() {
 		
 	},
+	mounted() {
+		this.getList()
+	},
 	computed: {
-	
+	   stringFn(item){
+           return (item)=>{
+			let reg = /(?<=\d{3})(\d{4})/;
+			return item.id.slice(0,3)+'****'+item.id.slice(-4)
+		   }
+	   }
 	},
 	methods: {
-		visionHandle(){
-			location.href="https://www.orzcash.com/#/clientkyc"
+		async getList(){
+			let opts = {
+				url: 'api/user/card/get',
+				method: 'get',
+			};
+			const { data } = await request.httpTokenRequest(opts)
+            console.log(data,'data')
+			this.list = data.result.cards;
+			
+		},
+		async activeHandle(item,index){
+            const { id } = item;
+			console.log(item,'item')
+			const opts = {
+                    url: 'api/user/card/activate',
+                    method: 'post',
+                }
+				const params = {cardId:id }
+                const { data } = await request.httpTokenRequest(opts,params)
+                console.log(data,'data')
+				uni.showToast({ title:'激活成功'});
+				//this.list[index] = data.result
+				// this.list.splice(this.list,index,data.result)
+				this.$set(this.list, index, data.result)
 		}
+		// visionHandle(){
+		// 	location.href="https://www.orzcash.com/#/clientkyc"
+		// }
 	}
 };
 </script>
@@ -101,7 +136,11 @@ page {
 }
 
 /* #endif */
-
+.custom-header-subTitle{
+	display:flex;
+	width: 200px;
+	justify-content: space-between;
+}
 .custom{
     &-wrap{
         width: calc(100% - 24px);

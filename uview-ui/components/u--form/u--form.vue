@@ -56,7 +56,7 @@
 				// #ifdef MP-WEIXIN
 				this.setMpData()
 				// #endif
-				return this.$refs.uForm.validateField(value, callback)
+				return this.$refs.uForm.Field(value, callback)
 			},
 			resetFields() {
 				// #ifdef MP-WEIXIN

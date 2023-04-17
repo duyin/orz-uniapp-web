@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2023-02-14 11:24:10
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-03-01 17:51:41
+ * @LastEditTime: 2023-03-02 17:09:16
  * @FilePath: /orz-uniapp/pages/me/aboutOrz.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -144,15 +144,7 @@ export default {
 					url: 'api/email/code',
 					method: 'post',
 				};
-				// request.httpRequest(opts).then(res => {
-				// 	// console.log(res);
-				// 	uni.hideLoading();
-				// 	if (res.statusCode == 200) {
-				// 		this.message = res.data.data.length;
-				// 	} else {
-				// 		console.log('数据请求错误～');
-				// 	}
-				// });
+			
                 const { data } = await request.httpRequest(opts,{email: this.transferForm.email,type:'tradpasswd'})
                 console.log(data,'data')
                 setTimeout(() => {
@@ -184,11 +176,7 @@ export default {
                 return;
             }
             this.$emit('closeFn')
-        },
-        changeCollapse(){},
-        closeCollapse(){},
-        openCollapse(){},
-        changeHandle(){}
+        }
 	}
 };
 </script>

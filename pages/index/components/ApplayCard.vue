@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-03-01 14:52:20
+ * @LastEditTime: 2023-03-17 12:48:18
  * @FilePath: /orz-uniapp/pages/index/index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -32,6 +32,8 @@
                 <view>加密資產信用卡</view>
                 <view>多種金融解決方案</view>
                 <view class="home-apply-btn">立即申請</view>
+                <view class="home-apply-btn" @tap="infoHandle">view card info </view>
+              
                </view>
 			</view>
 			<view class="home-transfer-record">
@@ -45,6 +47,7 @@
 				<view>ORZCash获万事达香港发卡机构KSV银行合作，牌照方发卡</view>
 			</view>
 			<view style="height: 140rpx;width: 1rpx;"></view>
+            <card-extract :visible="isCardExtract" @closeFn="closeFn"/>
 		</view>
 	
 	
@@ -52,17 +55,22 @@
 
 <script>
    	import { mapState } from "vuex";
+    import cardExtract from "./cardExtract";
+    import request from '@/common/request.js';
 	export default {
 		data() {
 			return {
 				transferList:[],
 				curIndex:1,
+                isCardExtract:false,
+                activeText:'未激活',
 				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 			}
 		},
 		computed: {
 			...mapState('app',['userInfo'])
 		},
+        components:{cardExtract},
 		mounted() {
 			
 		},
@@ -76,6 +84,20 @@
                 uni.navigateTo({
 					url: '../me/cardlist'
 				})
+            },
+            closeFn(){
+                this.isCardExtract = false
+            },
+            infoHandle(){
+                this.isCardExtract = true
+            },
+            async activeHandle(){
+                const opts = {
+                    url: 'api/user/kyc',
+                    method: 'post',
+                }
+                const { data } = await request.httpTokenRequest(opts)
+                console.log(data,'data')
             }
 		},
 	};

@@ -25,6 +25,7 @@ import store from './store'
 import uView from 'uview-ui';
 Vue.use(uView);
 Vue.use(VueClipBoard)
+// Vue.use(uniDataSelect)
 Vue.config.productionTip = false
 
 App.mpType = 'app'

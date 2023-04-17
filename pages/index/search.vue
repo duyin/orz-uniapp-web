@@ -2,7 +2,7 @@
  * @Author: 杜印 m18612326243@163.com
  * @Date: 2022-12-24 18:52:18
  * @LastEditors: 杜印 m18612326243@163.com
- * @LastEditTime: 2023-02-21 18:06:28
+ * @LastEditTime: 2023-03-02 17:05:59
  * @FilePath: /orz-uniapp/pages/index/search.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -11,7 +11,7 @@
       <view class="account-header">
         资金账户
 	  </view>
-	  <view class="account-title">Tom Inc Treasury</view>
+	  <view class="account-title">{{ userInfo.name }} Inc Treasury</view>
 	  <view class="account-list">
         <view class="account-list-item">
 			<u-icon name="photo" class="me-img" />
@@ -39,26 +39,26 @@
 	  <view class="account-main">
 		<view class="account-main-title">法币账户 <text class="account-main-subtitle">账户号码: 002-011-5224818-001</text></view>
 		<view>
-			<view class="account-main-content"  @click="detailHandle">
+			<view class="account-main-content"  @click="detailHandle" v-for="(item,index) in assetsAccount" :key="index">
 				<view class="account-main-item">
 					<u-icon name="photo" class="me-img" />
 					<view class="account-main-text">
 						<view>
-							USD
+							{{ item.asset }}
 						</view>
-						<view>USA Dollar</view>
+						<view>{{ item.asset }} Dollar</view>
 					</view>
 				</view>
 				<view>
 					<text>
-						0.00
+						{{ item.available }}
 					</text>
 					<view>
-						0.00 HKD
+						{{ item.balance }} HKD
 					</view>
 				</view>
 			</view>
-			<view class="account-main-content">
+			<!-- <view class="account-main-content">
 				<view class="account-main-item">
 					<u-icon name="photo" class="me-img" />
 					<view class="account-main-text">
@@ -76,14 +76,14 @@
 						0.00 HKD
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 	  </view>
 	  <view class="account-main">
 		<view class="account-main-title">数字资产 <text class="account-main-subtitle">账户号码: 002-011-5224818-004</text></view>
 		<view>
-			<view class="account-main-content">
-				<view class="account-main-item">
+			<view class="account-main-content" >
+				<view class="account-main-item" >
 					<u-icon name="photo" class="me-img" />
 					<view class="account-main-text">
 						<view>
@@ -135,19 +135,41 @@
 import capital from '../capital/capital'
 import extract from '../capital/extract'
 import transfer from '../capital/transfer'
+import request from '@/common/request.js';
+import { mapState } from "vuex";
 	export default {
 		data() {
 			return {
 				isCapital:false,
 				isExtract:false,
-				isTransfer:false
+				isTransfer:false,
+				resultInfo: {},
+				assetsAccount:[]
 			}
 		},
 		components: { capital,extract,transfer},
 		mounted() {
-
+          this.getAccount()
+		},
+		computed: {
+			...mapState('app',['userInfo'])
 		},
 		methods: {
+			async getAccount(){
+				// const opts = {
+				// 	url: 'api/user/account/get',
+				// 	method: 'get',
+				// };
+				// const { data } = await request.httpTokenRequest(opts)
+				// console.log(data,'dataaccount')
+				const opt = {
+					url: 'api/user/account/balance',
+					method: 'get',
+				}
+				const { data } = await request.httpTokenRequest(opt)
+                this.assetsAccount = data.result.balances.assets
+				console.log(data,'dataaccount')
+			},
 			rechargeHandle(){
 				console.log('999')
                this.isCapital = true;

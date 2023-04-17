@@ -6,9 +6,9 @@ import Cookies from 'js-cookie'
 // 不带token请求
 const httpRequest = (opts, data) => {
 	if(opts.type == 2){
-		baseUrl = ' https://dev.orzcash.com/';
+		baseUrl = 'https://dev.orzcash.com/';
 	}else{
-		baseUrl = ' https://dev.orzcash.com/';
+		baseUrl = 'https://dev.orzcash.com/';
 	}
 	uni.onNetworkStatusChange(function(res) {
 		if (!res.isConnected) {
@@ -63,20 +63,20 @@ const httpTokenRequest = (opts, data) => {
 		}
 		return false
 	});
-	let token = Cookies.get('token') || uni.getStorageSync('token');
+	let token = Cookies.get('token') || uni.getStorageSync('token')||'';
 	console.log(token,'token');
 	// hadToken()
-	if (token == '' || token == undefined || token == null) {
-		uni.showToast({
-			title: '账号已过期，请重新登录',
-			icon: 'none',
-			complete: function() {
-				uni.reLaunch({
-					url: '/pages/login/index1'
-				});
-			}
-		});
-	} else {
+	// if (token == '' || token == undefined || token == null) {
+	// 	uni.showToast({
+	// 		title: '账号已过期，请重新登录',
+	// 		icon: 'none',
+	// 		complete: function() {
+	// 			uni.reLaunch({
+	// 				url: '/pages/login/index1'
+	// 			});
+	// 		}
+	// 	});
+	// } else {
 		let httpDefaultOpts = {
 			url: baseUrl + opts.url,
 			data: data,
@@ -99,21 +99,11 @@ const httpTokenRequest = (opts, data) => {
 					if (res[1].data.code == 200) {
 						resolve(res[1])
 					} else {
-						if (res[1].data.code == 5000) {
-							// uni.showModal({
-							// 	title: '提示',
-							// 	content: res[1].data.message,
-							// 	success: function (res) {
-							// 		if (res.confirm) {
-							// 			uni.reLaunch({
-							// 				url: '/pages/login/login'
-							// 			});
-							// 			uni.clearStorageSync();
-							// 		} 
-							// 	}
-							// });
-							uni.reLaunch({
-								url: '/pages/login/index'
+						console.log('90909===',res[1].statusCode)
+						if (res[1].statusCode == 5000 || res[1].statusCode == 401) {
+							console.log('8080****')
+							uni.navigateTo({
+								url: '../tn_components/Index/index'
 							});
 							uni.clearStorageSync();
 						} else {
@@ -132,7 +122,7 @@ const httpTokenRequest = (opts, data) => {
 			)
 		})
 		return promise
-	}
+	// }
 	// let token = uni.getStorageSync('token')
 	//此token是登录成功后后台返回保存在storage中的
 
@@ -148,7 +138,7 @@ const hadToken = () => {
 			icon: 'none',
 			complete: function() {
 				uni.reLaunch({
-					url: '/pages/login/index'
+					url: '../tn_components/Index/index'
 				});
 			}
 		});

@@ -10,11 +10,18 @@
 /* ==================
         初始化
  ==================== */
+ @font-face {
+	font-family: "Copperplate";
+	src: url("./fonts/HandelGothicITCW02Bold.ttf") format("truetype");
+	src: url("./fonts/HandelGothicITCW02Light.ttf") format("truetype")
+  }
 body {
 	background-color: #f2f5f9;
 	font-size: 28upx;
 	color: #333333;
-	font-family: Helvetica Neue, Helvetica, sans-serif;
+	height:100%;
+	width: 100%;
+	font-family: 'Copperplate'!important;
 }
 
 view,
@@ -82,6 +89,9 @@ image.loading::after {
 	width: 100%;
 }
 
+uni-page{
+	height:auto;
+}
 /* ==================
          开关
  ==================== */
