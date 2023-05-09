@@ -14,17 +14,25 @@
 		<view class="home-main">
             <view class="network-title">网络</view>
 			<view class="network-box">
-				<!-- <uni-data-select
+				<uni-data-select
 					class="client-phoneAreaList1"
 					v-model="chainId"
 					:localdata="chinaList"
 					:clear="false"
-				>
-			  </uni-data-select> -->
+				/>
+			 
 			</view>
 			<view class="qrcode-wrap">
 				<view class="qrcode-box">
-					<vue-qr :logo-src="logoSrc"
+					<!-- <vue-qr :logo-src="logoSrc"
+					:size="191"
+					:margin="0"
+					:auto-color="true"
+					:dot-scale="1"
+					:text="appSrc"
+					colorDark="#000"
+				/> -->
+				<vue-qr 
 					:size="191"
 					:margin="0"
 					:auto-color="true"
@@ -54,7 +62,8 @@
                 <view>1. 这是您的存款位址，它可能随时改变。请勿用做您的钱包位址。一旦您成功注入资产，我们会将该其移至我们仓库中的其他位置。
 2. 您的数字资产将有离岸银行及托管机构托管。</view>
 			</view>
-            <view class="next-btn" @tap="backHandle">Back</view>
+            <view class="next-btn" @tap="submit">Go etherscan</view>
+
 		</view>
 		
 	</view>
@@ -92,16 +101,24 @@ export default {
             status:0,
             activeIndex:0,
 			usdtIcon,
-			chainId:'',
+			chainId:'USDT_ERC20',
 			logoSrc: usdtIcon,
 
             appSrc: '',
             active:false,
 			message:'',
 			chinaList:[
+				// {  
+				//    text:'ETH (ERC20) Ethereum Network',
+				//     value:'ETH (ERC20) Ethereum Network'
+				// },
+				// {  
+				//    text:'USDC_ERC20 Network',
+				//     value:'USDC_ERC20'
+				// },
 				{  
-				   text:'ETH (ERC20) Ethereum Network',
-				  value:'ETH (ERC20) Ethereum Network'
+				   text:'USDT_ERC20 Network',
+				    value:'USDT_ERC20'
 				}
 			],
             userInfo:{
@@ -123,12 +140,20 @@ export default {
 	},
 	mounted() {
 		this.getUserInfo()
-		
+		this.addCoin()
 	},
    
 	methods: {
 		...mapActions('app',['setToken']),
-		
+		async addCoin(){
+			let opts = {
+				url: 'api/user/coinadd',
+				method: 'post',
+			};
+			const { data } = await request.httpTokenRequest(opts,{ "coinKey" :["USDC_ERC20", "USDT_ERC20", "ETH_GOERLI"] })
+			console.log(data,'data',data.result)
+			// this.chinaList = 
+		},
 		doCopy: function () {
 			this.$copyText(this.message).then(function (e) {
 				uni.$u.toast('success!');
@@ -138,7 +163,7 @@ export default {
 		},
 		backHandle(){
 			uni.navigateTo({
-				url: '../../pages/injectassets/index'
+				url: '../../pages/cardoverview/index'
 			})
 		},
 		async getUserInfo(){
@@ -166,13 +191,16 @@ export default {
             this.activeIndex = key;
         },
         submit(token){
-			this.robortToken = token;
-			let opts = {
-					url: 'api/user/rebot',
-					method: 'post'
-				};
-			const {data} = request.httpRequest(opts,{recaptchatoken: this.robortToken});
-			console.log(data,'data')
+			// https://etherscan.io/
+			location.href="https://etherscan.io/address/"+this.message
+			// this.robortToken = token;
+			// let opts = {
+			// 		url: 'api/user/coinTransaction',
+			// 		method: 'post'
+			// 	};
+			// const {data} = request.httpTokenRequest(opts,{coinKey: this.chainId});
+			// console.log(data,'data')
+			
 		},
 		
       

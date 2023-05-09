@@ -16,10 +16,12 @@
 		<view class="custom-wrap">
 		  <view v-for="(item, index) in list" class="custom-item">
             <view class="custom-header">
-				<view class="custom-header-left"></view>
+				<view class="custom-header-left">
+					<img :src="item.product_imageurl" class="custom-header-leftImg"/>
+				</view>
 				<view class="custom-header-right">
-					<view class="custom-header-subTitle">{{ stringFn(item)}}<span @tap="()=>activeHandle(item,index)">{{ item.status=='pending-activation'?'未激活':'已激活' }}</span></view>
-					<view>{{ item.product.name }}</view>
+					<view class="custom-header-subTitle">{{ stringFn(item)}}<span @tap="()=>activeHandle(item,index)">{{ item | statusCard}}</span></view>
+					<view>{{ item.product_name }}</view>
 				</view>
 			</view>
 			<view class="custom-footer-item">
@@ -35,6 +37,23 @@
 		  </view>
             
 		</view>
+		<u-modal :show="showCardIssue" confirmText="激活" cancelText="取消" showCancelButton @confirm="confirmActive" @cancel="cancelActive">
+			<view class="slot-content">
+				
+				<u--form
+					labelPosition="left"
+					:model="issueForm"
+					ref="form"
+				
+					labelWidth="80px"
+			>
+				<u-form-item prop="cvc" label="CVC">
+					<u--input v-model="issueForm.cvc" placeholder=""></u--input>
+				</u-form-item>
+			
+			</u--form>
+			</view>
+		</u-modal>
 	</view>
 </template>
 
@@ -44,45 +63,26 @@ export default {
 	data() {
 		return {
 			activeText:'未激活',
+			issueForm:{
+				cardSuffix:'',
+				cvc:''
+			},
+			rowItem:{},
+			showCardIssue:false,
 			list:[
-				// {
-				// 	backName:'**** **** 3035',
-				// 	title:'ORZ WORLD MASTERCARD',
-				// 	balanceName:'Card Balance',
-				// 	balanceMoney:'0.00 HKD',
-				// 	cardLimit:'Card Limit',
-				// 	CardLimitMoney:'0.00 HKD'
-				// },
-				// {
-				// 	backName:'**** **** 3036',
-				// 	title:'ORZ WORLD MASTERCARD',
-				// 	balanceName:'Card Balance',
-				// 	balanceMoney:'0.00 HKD',
-				// 	cardLimit:'Card Limit',
-				// 	CardLimitMoney:'0.00 HKD'
-				// },
-				// {
-				// 	backName:'**** **** 3037',
-				// 	title:'ORZ WORLD MASTERCARD',
-				// 	balanceName:'Card Balance',
-				// 	balanceMoney:'0.00 HKD',
-				// 	cardLimit:'Card Limit',
-				// 	CardLimitMoney:'0.00 HKD'
-				// },
-				// {
-				// 	backName:'**** **** 3038',
-				// 	title:'ORZ WORLD MASTERCARD',
-				// 	balanceName:'Card Balance',
-				// 	balanceMoney:'0.00 HKD',
-				// 	cardLimit:'Card Limit',
-				// 	CardLimitMoney:'0.00 HKD'
-				// }
+				
 
 			]
 		}
 	},
 	onLoad() {
 		
+	},
+    filters:{
+       statusCard(item){
+          console.log(item)
+		  return  {'pending-activation':'未激活','cancelled':'已取消','active':'已激活','locked':"用户已锁定",'suspended':'平台锁定'}[item.status]
+	   }
 	},
 	mounted() {
 		this.getList()
@@ -91,7 +91,7 @@ export default {
 	   stringFn(item){
            return (item)=>{
 			let reg = /(?<=\d{3})(\d{4})/;
-			return item.id.slice(0,3)+'****'+item.id.slice(-4)
+			return item.cardNumber.slice(0,3)+'****'+item.cardNumber.slice(-4)
 		   }
 	   }
 	},
@@ -103,23 +103,47 @@ export default {
 			};
 			const { data } = await request.httpTokenRequest(opts)
             console.log(data,'data')
-			this.list = data.result.cards;
+			this.list = data.result;
 			
+		},
+		async getAjaxCvc(dataItem){
+			const opts = {
+				url: 'api/user/card/validateCard',
+				method: 'post',
+			}
+			const params = {
+				"productId": "600",
+				"cardId":dataItem.id,
+				"last6":dataItem.cardNumber.slice(-6),
+				"expiryMonth":dataItem.expiryMonth,
+				"expiryYear": dataItem.expiryYear,
+				"cvv":this.issueForm.cvc
+			}
+			const { data } = await request.httpTokenRequest(opts,params)
+			console.log(data,'cvc===>')
+			this.showCardIssue = false;
+			this.getList()
+			
+		},
+		confirmActive(){
+			this.getAjaxCvc(this.rowItem)
 		},
 		async activeHandle(item,index){
             const { id } = item;
 			console.log(item,'item')
-			const opts = {
-                    url: 'api/user/card/activate',
-                    method: 'post',
-                }
-				const params = {cardId:id }
-                const { data } = await request.httpTokenRequest(opts,params)
-                console.log(data,'data')
-				uni.showToast({ title:'激活成功'});
-				//this.list[index] = data.result
+			this.showCardIssue = true;
+		    this.rowItem = item
+			// const opts = {
+            //         url: 'api/user/card/activate',
+            //         method: 'post',
+            //     }
+			// 	const params = {cardId:id }
+            //     const { data } = await request.httpTokenRequest(opts,params)
+            //     console.log(data,'data')
+			// 	uni.showToast({ title:'激活成功'});
+			
 				// this.list.splice(this.list,index,data.result)
-				this.$set(this.list, index, data.result)
+				// this.$set(this.list, index, data.result)
 		}
 		// visionHandle(){
 		// 	location.href="https://www.orzcash.com/#/clientkyc"
@@ -146,6 +170,11 @@ page {
         width: calc(100% - 24px);
         margin: 24px auto;
     }
+	&-header-leftImg{
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
     &-userImg{
         width: 100px;
         height: 100px;
@@ -172,7 +201,7 @@ page {
 	&-header-left{
 		width: 100px;
 		height: 40px;
-		background: red;;
+		// background: red;;
 		border-radius: 6px;
 		margin-right:8px;
 	}

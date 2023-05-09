@@ -26,21 +26,29 @@
                 <view class="card-header-list">
                     <view class="card-header-list-left">
                         <view class="card-header-list-leftImg">
-                            <img src="https://cdn.uviewui.com/uview/album/1.jpg" ></img>
+                            <img src="https://cdn.uviewui.com/uview/album/1.jpg" />
                         </view>
                         <view>
-                            <view>KWLLY **** 0171</view>
+                            <view>{{ userName +'****'+cardInfo.cardNumber.slice(-4) }}</view>
                              <view>ORZ Mastercard</view>
                         </view>
                        
                     </view>
                     <view class="card-header-list-right" @click="()=>handle('0')"></view>
                 </view>
-                <view class="card-money-text">0.00 HKD</view>
+                <view class="card-money-text">0.00 USD</view>
 				<img :src="cardImg" alt="" class="cardImg">
 			 </view>
 		</view>
 		<view class="home-main">
+			<view class="card-system-info">
+                <view class="card-system-info-title">
+					{{ !isText?'**** **** **** '+cardInfo.cardNumber.slice(-4):cardInfo.cardNumber }}
+					<u-icon name="eye-off" @click="()=>handleEye(true)" v-if="!isText" size="18" color="#1b1b1b"></u-icon>
+                    <u-icon name="eye-fill" @click="()=>handleEye(false)"  v-if="isText" color="#1b1b1b"></u-icon>
+				</view>
+				<view>{{ userName }}</view>
+			</view>
 			<view class="card-list-wrap">
                 <view v-for="item in cardList" class="card-list" @click="()=>handle(item.id)">
                    <view class="card-item-list">
@@ -50,35 +58,94 @@
                 </view>
             </view>
             <view class="card-money-warp">
-               <view class="title">卡账户余额（HKD）</view>
-               <view class="card-hkd">0.00 HKD</view>
-               <view class="card-usd">≈ 0.00 USD</view>
-               <u-slider v-model="value" class="slide-box"></u-slider>
+               <view class="card-money-title">
+				<view  class="card-money-over">卡账户余额（USD）</view>
+                <!-- <view class="auto-asset" @tap="autoPayHandle">自动还款启用</view> -->
+				<!-- <view class="auto-asset">自动还款启用</view> -->
+			   </view>
+               <view class="card-hkd">{{ addressBalanceInfo.addressBalance }} USD</view>
+               <!-- <view class="card-usd">≈ {{ addressBalanceInfo.addressBalance }}  USDT</view> -->
+               <!-- <u-slider v-model="value" class="slide-box"></u-slider> -->
+			   <!-- <u-line-progress :percentage="value" activeColor="#0081ff" class="slide-box"></u-line-progress> -->
                <view class="card-box">
-                <view>卡账户限额</view>
-                <view>100，000 USD</view>
+                <view>本月累计消费额</view>
+                <view>3，000.00 USD</view>
                </view>
-               <view class="card-assets">查看资产价比<u-icon name="arrow-rightward" class="arrow-box"></u-icon></view>
+			   <view class="card-box">
+                <view>每日现金提现金额</view>
+                <view>30，000.00 USD</view>
+               </view>
+			   <view class="card-box">
+                <view>每日消费限制</view>
+                <view>100，000.00 USD</view>
+               </view>
+               <!-- <view class="card-assets">查看资产价比<u-icon name="arrow-rightward" class="arrow-box"></u-icon></view> -->
             </view>
-            <view class="card-money-warp">
+            <!-- <view class="card-money-warp">
                <view class="title">本月支出</view>
-               <view class="card-hkd">0.00 HKD</view>
-               <view class="card-usd card-seconed">≈ 0.00 USD</view>
+               <view class="card-hkd card-seconed">0.00 USD</view>
+           
                <view class="card-box card-box-seconed">
                 <view>每日现金提现限额</view>
-                <view>100，000  USD</view>
+                <view>30，000  USD</view>
                </view>
                <view class="card-box">
                 <view>每日消费限额</view>
-                <view>100，000 USD</view>
+                <view>30，000 USD</view>
                </view>
-            </view>
+            </view> -->
+			<view class="footer">
+				<view class="footer-header">
+					<view>交易记录</view>
+					<view>
+						<uni-data-select
+							class="client-phoneAreaList1"
+							v-model="statusValue"
+							:localdata="statusList"
+							@change="changeHandle"
+							:clear="false"
+						/>
+					</view>
+				</view>
+				<view>
+					<view v-for="item in list" class="footer-list">
+					 <view class="footer-left">
+						<view class="footer-left-txHash">{{item.txHash.slice(0,4)+'****'+item.txHash.slice(-4)}}</view>
+						<view>{{ userWalletAddressShInfo ==item.destinationAddress?'转入':'转出'}}</view>
+					 </view>
+					  <view>{{ Number(item.txAmount).toFixed(4) +(" "+item.coinKey) }}</view>
+					</view>
+				</view>
+				
+			</view>
 		</view>
-		
+		<autoPay :visible="isAutoPay" v-if="isAutoPay" @closeExtractFn="closeFn"/>
+		<setlimits  :visible="isSetLimits"  v-if="isSetLimits" @closeExtractFn="closeFn"/>
+		<changecard :visible="isChangeCrad"  v-if="isChangeCrad"  @closeExtractFn="closeFn" />
+		<pinPassword :visible="isPinPassword"  v-if="isPinPassword" @closeExtractFn="closeFn" />
+		<notion :visible="isNotion"  v-if="isNotion" @closeExtractFn="closeFn" />
+		<regular  :visible='isRegular'  v-if="isRegular"  @closeExtractFn="closeFn"/>
+		<u-modal :show="showIssue" confirmText="激活/卡列表" cancelText="取消" showCancelButton @confirm="confirmActive" @cancel="cancelActive">
+			<view class="slot-content">
+				是否跳转卡片列表页进行激活？
+				<!-- <u--form
+					labelPosition="left"
+					:model="issueForm"
+					ref="form"
+				
+					labelWidth="80px"
+			>
+				<u-form-item prop="cvc" label="CVC">
+					<u--input v-model="issueForm.cvc" placeholder=""></u--input>
+				</u-form-item>
+			
+			</u--form> -->
+			</view>
+		</u-modal>
 	</view>
 </template>
 <script>
-import cardImg from '@/static/home/client-card.png'
+import cardImg from '@/static/home/cardoverview.png'
 import request from '@/common/request.js';
 import { mapState,mapActions } from "vuex";
 // import cardOutlined from '../.././static/home/card-outlined.png'
@@ -90,7 +157,12 @@ import slidersOutlined from '../.././static/home/sliders-outlined.png'
 import insetOutlined from '../.././static/home/inset-outlined.png'
 import underreview from '../.././static/home/underreview.png'
 import turndown from '../.././static/home/turndown.png'
-
+import autoPay from '@/pages/autoPay'
+import setlimits from '@/pages/setlimits'
+import changecard from '@/pages/changecard'
+import pinPassword from '@/pages/pinPassword'
+import notion from '@/pages/notion'
+import regular from '@/pages/regular'
 export default {
 	data() {
 		return {
@@ -100,32 +172,87 @@ export default {
             turndown,
             isCard:false,
 			title: 'Card',
+			isText:false,
             value:30,
             status:0,
+			isAutoPay:false,
+			isSetLimits:false,
+			isChangeCrad:false,
+			isPinPassword:false,
+			isNotion:false,
+			isRegular:false,
+			statusValue:'',
+			showIssue:false,
+			copyList:[],
+			cardInfo:{
+				cardNumber:''
+			},
+			issueForm:{
+				cardSuffix:'',
+				cvc:''
+			},
+			addressBalanceInfo:{},
+		    statusList:[
+			    {  
+				   text:'全部',
+				    value:'all'
+				},
+				{  
+				   text:'处理中',
+				  value:'padding'
+				},
+				{  
+				   text:'成功',
+				    value:'success'
+				},
+				{  
+				   text:'取消',
+				    value:'cancel'
+				}
+			],
+			list:[],
             userInfo:{
                 status:0
             },
+			userWalletAddressShInfo:'',
+			userName:'',
+			cardListArr:[],
 			cardList:[
                 {name:'充值',img:insetOutlined,id:'0'},
-                {name:'锁卡',img:lockOutlined,id:'1'},
-                {name:'设置限制',img:slidersOutlined,id:'2'},
+                {name:'锁卡限额',img:lockOutlined,id:'1'},
+                {name:'定期存款',img:slidersOutlined,id:'2'},
                 {name:'通知设定',img:bellOutlined,id:'3'},
-                {name:'更改密码',img:editOutlined,id:'4'},
+                {name:'ATM密码',img:editOutlined,id:'4'},
                 {name:'更换卡',img:blockOutlined,id:'5'}
             ]
 			
 		};
 	},
+	components:{
+		autoPay,
+		setlimits,
+		changecard,
+		pinPassword,
+		notion,
+		regular
+	},
 	computed: {
 		...mapState('app',['token'])
 	},
 	mounted() {
+		console.log('888888')
+		this.getTranslation()
 		this.getUserInfo()
-		
+		this.addCoin()
+		this.getBalance();
+		// this.getCoinBalanceList()
+		this.getUserInfoName();
+		this.getList()
 	},
    
 	methods: {
 		...mapActions('app',['setToken']),
+		
 		async getUserInfo(){
 			const opt = {
 				url: 'api/user/kycstatus',
@@ -135,18 +262,178 @@ export default {
 		    console.log(data)
 			this.userInfo = data.result
 			this.status = data.result.status
-			// if(status>1){
-			// 	uni.$u.toast('該用戶已認證!');
-			// 	this.isKycAuth = true
-			// 	return
-			// }
+			if(this.status==3){
+				
+				// this.getCardIssue()
+				let opts = {
+					url: 'api/user/kycpass',
+					method: 'post',
+				};
+				const  data1 = await request.httpTokenRequest(opts,{})
+				const issueCard = localStorage.getItem('issue')
+			    console.log(issueCard,'issueCard')
+				  if(!this.cardListArr.length){
+					this.getCardIssue()
+				  }
+			}
+		},
+		handleEye(type){
+          this.isText = type
+
+        },
+		async getList(){
+			let opts = {
+				url: 'api/user/card/get',
+				method: 'get',
+			};
+			const { data } = await request.httpTokenRequest(opts)
+            console.log(data.result,'data get',data.code)
+			if(data.code!==200){
+				return;
+			}
+		  
+			this.cardInfo = data.result[0]
+			this.cardListArr = data.result
+			const isActive = this.cardListArr.every(item=>item.status!=='pending-activation');
+			console.log(isActive,'isActive')
+			if(!isActive){
+				this.showIssue = true
+			}
+		},
+		async getUserInfoName(){
+			const opts = {
+				url: 'api/user/info ',
+				method: 'post',
+			}
+			const { data } = await request.httpTokenRequest(opts)
+			console.log(data.result,'data')
+			if(data.code!==200){
+				uni.showToast({ title: data.msg, icon: 'none' });
+				return;
+			}
+			this.userName = data.result.name||'--'
+			this.userWalletAddressShInfo = data.result.userWalletAddressSh
+			
+		},
+		cancelActive(){
+          this.showIssue = false
+		},
+		changeHandle(type){
+         console.log(type,'val===>')
+		 
+		 if(type=='success'){
+			this.list = this.copyList.filter(item=>item.transactionSubStatus=='CONFIRMED') 
+		 }else if(type=='padding'){
+			this.list = this.copyList.filter(item=>item.transactionSubStatus!=='CONFIRMED') 
+			
+		 }else{
+			this.list = this.copyList
+		 }
+
 		},
 		handle(id){
          if(id=='0'){
 			uni.navigateTo({
-				url: '../../pages/injectassets/index'
+				url: '../../pages/injectpay/index'
 			})
 		 }
+		
+		 if(id=='1'){
+			this.isSetLimits = true;
+		 }
+		 if(id=='4'){
+			this.isPinPassword = true;
+		 }
+		 if(id=='2'){
+			this.isRegular = true
+		 }
+		 if(id=='3'){
+			this.isNotion = true;
+		 }
+		 if(id=='5'){
+			this.isChangeCrad = true;
+		 }
+		},
+		autoPayHandle(){
+			this.isAutoPay = true;
+		},
+		async getCardIssue(){
+			let opts = {
+				url: 'api/user/card/issue',
+				method: 'post',
+			};
+				const params = {
+				"type": "virtual",
+				"productId": "600",
+				"embossedName":"OrzCash",
+				"cardSuffix":this.issueForm.cardSuffix,   //这个参数暂时保持未空，有值会发卡不成功
+				"xid":"",
+				"cardaccountid":'',
+				}
+			const { data } = await request.httpTokenRequest(opts,params)
+			console.log(data,'data')
+			this.getList()
+		},
+	
+		async confirmActive(){
+			const issueCard = localStorage.getItem('issue')
+			console.log(issueCard,'issueCard')
+		
+			if(+issueCard==1){
+				uni.navigateTo({
+					url: '../me/cardlist'
+				})
+			}else{
+				this.getCardIssue()
+			}
+		},
+		closeFn(){
+           this.isAutoPay = false
+		   this.isSetLimits = false;
+		   this.isChangeCrad = false;
+		   this.isPinPassword = false
+		   this.isNotion = false;
+		   this.isRegular = false;
+		},
+		async addCoin(){
+			let opts = {
+				url: 'api/user/coinadd',
+				method: 'post',
+			};
+			const { data } = await request.httpTokenRequest(opts,{ "coinKey" :["USDC_ERC20", "USDT_ERC20", "ETH_GOERLI"] })
+			console.log(data,'data',data.result)
+			
+			
+		},
+		async getTranslation(){
+			const opt = {
+				url: 'api/user/coinTransactionList',
+				method: 'post',
+			}
+			const {data} = await request.httpTokenRequest(opt,{})
+			if(data.code!==200){
+				return;
+			}
+			this.list = data.result
+			this.copyList = JSON.parse(JSON.stringify(data.result))
+		},
+		async getBalance(){
+			const opt = {
+				url: 'api/user/coinBalance',
+				method: 'post',
+			}
+			const {data} = await request.httpTokenRequest(opt,{coinKey:'ETH_GOERLI'})
+		    console.log(data)
+			this.addressBalanceInfo=data.result
+		},
+		async getCoinBalanceList(){
+			//api/user/coinBalanceList
+			const opt = {
+				url: 'api/user/coinBalanceList',
+				method: 'post',
+			}
+			const {data} = await request.httpTokenRequest(opt)
+		    console.log(data)
 		},
         submit(token){
 			this.robortToken = token;
@@ -163,6 +450,47 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.card-money-over{
+	text-align: center;
+	margin:0 auto;
+}
+.card-system-info-title{
+	display: flex;
+	justify-content: center;
+	align-items: end;
+}
+.card-system-info{
+	text-align: center;
+	margin-top:24px;
+}
+.client-phoneAreaList1{
+	width: 150px;
+}
+.footer-left-txHash{
+	width: 100%;
+	overflow: scroll;
+}
+.footer{
+	margin:24px auto 100px;
+}
+.footer-left{
+	width: 150px;
+}
+.footer-list{
+	display: flex;
+	margin-top:24px;
+	// align-items: center;
+	justify-content: space-between;
+}
+.footer-header{
+	display: flex;
+	margin-top:24px;
+	justify-content: space-between;
+	align-items: center;
+}
+.auto-asset{
+	color:#5677fc;
+}
 .card-assets{
     display: flex;
     margin-top:8px;
@@ -172,12 +500,7 @@ export default {
     align-items: center;
 }
 .slide-box{
-    ::v-deep{
-        .uni-slider{
-            margin:0!important;
-        }
-    }
-   
+	margin:16px auto;
 }
 .card-money-text{
     margin-bottom:16px;
@@ -192,6 +515,7 @@ export default {
 .card-box{
     display: flex;
     justify-content: space-between;
+	margin-top:12px;
 }
 .crad-underreview{
     margin: 16px auto;
@@ -269,6 +593,7 @@ export default {
     padding:16px;
     background: #EFEEF3;
     border-radius: 18px;
+	text-align: center;
 }
 .home-header{
 	width: calc(100%);
@@ -388,6 +713,12 @@ export default {
 .title{
 	margin-top:8px;
 	margin-bottom:8px;
+}
+.card-money-title{
+	margin-top:8px;
+	margin-bottom:8px;
+	display: flex;
+	justify-content: space-between;
 }
 .register{
 	color:#5677fc;

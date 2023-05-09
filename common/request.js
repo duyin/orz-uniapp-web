@@ -20,7 +20,7 @@ const httpRequest = (opts, data) => {
 		return false
 	});
 	let httpDefaultOpts = {
-		url: baseUrl + opts.url,
+		url: opts.isUtglValidator?opts.url:baseUrl + opts.url,
 		data: data,
 		method: opts.method,
 		header: opts.method == 'get' ? {
@@ -65,6 +65,7 @@ const httpTokenRequest = (opts, data) => {
 	});
 	let token = Cookies.get('token') || uni.getStorageSync('token')||'';
 	console.log(token,'token');
+	
 	// hadToken()
 	// if (token == '' || token == undefined || token == null) {
 	// 	uni.showToast({
@@ -78,7 +79,7 @@ const httpTokenRequest = (opts, data) => {
 	// 	});
 	// } else {
 		let httpDefaultOpts = {
-			url: baseUrl + opts.url,
+			url: opts.isUtglValidator?opts.url: baseUrl + opts.url,
 			data: data,
 			method: opts.method,
 			header: opts.method == 'get' ? {
@@ -103,7 +104,7 @@ const httpTokenRequest = (opts, data) => {
 						if (res[1].statusCode == 5000 || res[1].statusCode == 401) {
 							console.log('8080****')
 							uni.navigateTo({
-								url: '../tn_components/Index/index'
+								url: '../../tn_components/Index/index'
 							});
 							uni.clearStorageSync();
 						} else {

@@ -3937,3 +3937,13 @@ scroll-view.cu-steps .cu-item {
 .lines-white {
 	color: #ffffff;
 }
+
+.orz-btn{
+	text-align: center;
+    margin: 16px auto;
+	height: 44px;
+	line-height: 44px;
+    border-radius: 8px;;
+    background: #000;
+    color:#fff;
+}

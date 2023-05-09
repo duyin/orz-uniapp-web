@@ -27,10 +27,11 @@
                 <u--input placeholder="按资产搜索" ></u--input>
             </view>
             <view class="home-pay-list">
-                <view v-for="(item,index) in list" class="pay-list-item" 
+                <view v-for="(item,index) in list" 
+				  class="pay-list-item" 
                   @click="(e)=>listHandle(e,index)" 
                   :data-index="index"
-                   :class="{active:index===activeIndex}"
+                  :class="{active:index===activeIndex}"
                   >
                   <!-- <img :src="" /> -->
                     {{ item.name }}
@@ -68,7 +69,7 @@ export default {
 			title: '注入请求 - 数字资产',
             value:30,
             status:0,
-            activeIndex:0,
+            activeIndex:2,
             active:false,
             userInfo:{
                 status:0
@@ -124,7 +125,10 @@ export default {
             console.log(event,'taget',event.currentTarget,key)
             const { index } = event.currentTarget.dataset;
             console.log(index,key)
-            this.activeIndex = key;
+			if(+index!==0 && +index!==1){
+				this.activeIndex = key;
+			}
+          
         },
 		backHandle(){
 			uni.navigateTo({
@@ -194,6 +198,14 @@ export default {
     border-radius: 6px;;
     padding: 8px 16px;;
 
+}
+.pay-list-item:first-child{
+  background: #d6d1d1;
+  color:#fff;
+}
+.pay-list-item:nth-of-type(2){
+  background: #d6d1d1;
+  color:#fff;
 }
 .inject-assets{
     margin-top:16px;

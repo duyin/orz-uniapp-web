@@ -132,6 +132,7 @@
 				<view class="orz-btn" @click="submit">Submit</view>
 			</u--form>
 		</view>
+	
 	</view>
 </template>
 
@@ -139,11 +140,13 @@
 import request from '@/common/request.js';
 import { compress } from '@/common/ImageCompression';
 import { pathToBase64, base64ToPath } from 'image-tools'
+
 export default {
 	data() {
 		return {
 		    userId:'',
 			showSex: false,
+		
 			fileList:[],
 			compressedList:['compressed'],
 			fileList6:[],
@@ -206,6 +209,7 @@ export default {
 			
 		};
 	},
+	
 	mounted() {
 	  this.getCityList();
 	 this.getUserInfo()
@@ -215,6 +219,7 @@ export default {
 		sexSelect(e) {
 			this.form.sex = e.name
 		},
+		
 		backHandle(){
 			uni.navigateTo({
 				url: '../../tn_components/Index/index'

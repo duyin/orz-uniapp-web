@@ -127,6 +127,12 @@ export default {
 			const { status } = data.result
 		    console.log(status,'kycStatus')
 			if(status==4||status==2 || status==3){
+				let opts = {
+					url: 'api/user/kycpass',
+					method: 'post',
+				};
+				const { data } = await request.httpTokenRequest(opts,{})
+				console.log(data,'data')
 				uni.navigateTo({
 					url: '../../pages/cardoverview/index'
 				})
@@ -391,7 +397,6 @@ export default {
     margin: 16px auto;
 	height: 44px;
 	line-height: 44px;
-    border:1px solid #ccc;
     border-radius: 8px;;
     background: #000;
     color:#fff;
