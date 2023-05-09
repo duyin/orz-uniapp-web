@@ -6,30 +6,32 @@
 		<image class="img-b" src="https://zhoukaiwen.com/img/loginImg/3.png"></image> -->
 		<!-- 标题 -->
 		<view class="home-header">
-			<view class="home-title">{{ title }}</view>
-		     <view class="home-mastercard">Mastercard</view>
+			<view class="home-title">{{ $t('orzGlobal.title')  }}</view>
+		     <view class="home-mastercard">{{ $t('orzGlobal.masterCard') }}</view>
 			 <view class="card-img-box">
 				<img :src="cardImg" alt="" class="cardImg">
 			 </view>
+			 <!-- <lang-select class="right-menu-item" /> -->
 		</view>
 		<view class="home-main">
 			<form class="cl home-form">
 				<view class="t-a home-email" label="Email Address">
-					<view class="title">Email Address</view>
-					<input type="text" placeholder="Provide your Email"  v-model="loginForm.email" />
+					<!-- <view class="title">Email Address</view> -->
+					<view class="title">{{ $t('register.emailAddress') }}</view>
+					<input type="text" :placeholder="`${$t('register.ProvideEmail')}`"  v-model="loginForm.email" />
 				</view>
 				<view class="t-a">
-				<view class="title">Verification code</view>
+				<view class="title">{{ $t('register.verificationCode') }}</view>
                 <view
 					class="u-demo-block__content home-verification "
 					style="margin-top: 15px;"
 				>
 					<!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
 					<!-- #ifndef APP-NVUE -->
-					<u--input placeholder="Enter the verification code"  v-model="loginForm.code">
+					<u--input :placeholder="EnterCode"  v-model="loginForm.code">
 					<!-- #endif -->
 					<!-- #ifdef APP-NVUE -->
-					<u--input placeholder="Enter the verification code" v-model="loginForm.code">
+					<u--input  :placeholder="EnterCode" v-model="loginForm.code">
 					<!-- #endif -->
 						<template slot="suffix">
 							<u-code
@@ -37,14 +39,14 @@
 								@change="codeChange"
 								seconds="60"
 								changeText="X秒重新获取"
-								start-text="Get the code"
-								end-text="try again"
+								:start-text="`${$t('register.GetTheCode')}`"
+								:end-text="`${$t('register.tryAgain')}`"
 							></u-code>
 							<u-button
 								@tap="getCode"
 								:text="tips"
-								start-text="Get the code"
-								end-text="try again"
+								:start-text="`${$t('register.GetTheCode')}`"
+								:end-text="`${$t('register.tryAgain')}`"
                                 class="home-getBtn"
 								type="success"
 								size="mini"
@@ -57,15 +59,15 @@
 					</u--input>
 					<!-- #endif -->
 				</view>
-				<view class="home-robort">I am not a robort<u-switch activeColor="#1F1423" v-model="robortValue" @change="switchChange"></u-switch></view>
+				<view class="home-robort">{{ $t('register.robot') }}<u-switch activeColor="#1F1423" v-model="robortValue" @change="switchChange"></u-switch></view>
 				<view class="home-grecaptcha-wrap" v-if="robortValue">
 					<view id="grecaptcha" class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-size="normal"></view>
 				</view>
 				
 				<!-- <input type="text" placeholder="请输入邮箱" v-model="form.email" /> -->
 			</view>
-			<view class="orz-btn" @click="RegisterHandle" v-if="!isKycAuth">Apply / Login</view>
-			<view class="orz-btn-green" v-if="isKycAuth">Apply / Login</view>
+			<view class="orz-btn" @click="RegisterHandle" v-if="!isKycAuth">{{ $t('register.login') }}</view>
+			<view class="orz-btn-green" v-if="isKycAuth">{{ $t('register.login') }}</view>
              <!-- <view class="orz-btn" @click="LoginHandle">Login</view> -->
 			</form>
 		</view>
@@ -77,6 +79,7 @@ import cardImg from '@/static/home/home-card.png'
 import request from '@/common/request.js';
 import Cookies from 'js-cookie'
 import { mapState,mapActions } from "vuex";
+import LangSelect from '@/components/LangSelect'
 export default {
 	data() {
 		return {
@@ -107,13 +110,20 @@ export default {
 		};
 	},
 	computed: {
-		...mapState('app',['token'])
+		...mapState('app',['token']),
+		EnterCode() {
+            return this.$t('register.EnterCode')
+        }
 	},
+	
 	mounted() {
 		this.ctGrecaptcha()
 		// this.getUserInfo()
 	},
-   
+	components: {
+		LangSelect,
+	
+	},
 	methods: {
 		...mapActions('app',['setToken']),
 		async getUserInfo(){
@@ -303,6 +313,12 @@ export default {
 };
 </script>
 <style lang="scss">
+.right-menu-item{
+	position: absolute;
+	right: 20px;
+	top:50px;
+	width: 150px;
+}
 .home-header{
 	width: calc(100%);
 	padding:0 25px;

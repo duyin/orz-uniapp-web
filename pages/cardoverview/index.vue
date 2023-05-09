@@ -30,7 +30,7 @@
                         </view>
                         <view>
                             <view>{{ userName +'****'+cardInfo.cardNumber.slice(-4) }}</view>
-                             <view>ORZ Mastercard</view>
+                             <view>{{ $t('orzGlobal.masterCard') }}</view>
                         </view>
                        
                     </view>

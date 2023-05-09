@@ -19,7 +19,7 @@ import uniDataSelect from './components/uni-data-select/uni-data-select.vue'
 Vue.component('uni-data-select', uniDataSelect)
 import VueClipBoard from 'vue-clipboard2'
 import store from './store'
-
+import i18n from './lang'
 
 // 引入:uView-UI
 import uView from 'uview-ui';
@@ -27,11 +27,16 @@ Vue.use(uView);
 Vue.use(VueClipBoard)
 // Vue.use(uniDataSelect)
 Vue.config.productionTip = false
-
+// set ElementUI lang to EN
+Vue.use(uView, {
+    // size: Cookies.get('size') || 'medium', // set element-ui default size
+    i18n: (key, value) => i18n.t(key, value)
+  })
 App.mpType = 'app'
 
 const app = new Vue({
     ...App,
-    store
+    store,
+    i18n
 })
 app.$mount()
